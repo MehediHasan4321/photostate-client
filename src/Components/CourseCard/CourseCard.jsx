@@ -18,7 +18,7 @@ const CourseCard = ({course}) => {
                 </div>
             </div>
             <div className=' absolute bottom-0 w-full'>
-                <button className='w-full h-20 bg-black text-white font-semibold'>Select</button>
+                <button className='w-full h-20 bg-black text-white font-semibold rounded-b-md'>View Details</button>
             </div>
         </div>
     );

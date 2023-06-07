@@ -29,7 +29,7 @@
     {
         "name":"Arian Rakib",
         "email":"rakib@gamil.com",
-        "rating":"4",
+        "rating":4,
         "talent":"Wild Photography",
         "image":"https://images.unsplash.com/photo-1611666161392-c2353700231a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDN8fHxlbnwwfHx8fHw%3D&w=1000&q=80",
         "courses":[],
@@ -47,7 +47,7 @@
     {
         "name":"Limon Ahmed",
         "email":"palash@gamil.com",
-        "rating":"4",
+        "rating":"1.5",
         "talent":"Wild Photography",
         "image":"https://images.unsplash.com/photo-1623094226090-441a0117d3da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&w=1000&q=80",
         "courses":[],
