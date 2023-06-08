@@ -8,24 +8,24 @@ import { toast } from 'react-hot-toast';
 const Login = () => {
     const [type, setType] = useState(true)
     const handltype = () => setType(!type)
-    const {loginWithEmailPass} = useAuth()
+    const { loginWithEmailPass } = useAuth()
     const location = useLocation()
     const navigate = useNavigate()
     const from = location?.state?.from?.pathname || '/'
-    const handleLogin = event=>{
+    const handleLogin = event => {
         event.preventDefault()
         const form = event.target;
-        const email =form.email.value;
+        const email = form.email.value;
         const password = form.password.value;
-       loginWithEmailPass(email,password)
-       .then(()=>{
-        toast.success('Login Successfull')
-        form.reset()
-        navigate(from,{replace:true})
-       })
-       .catch(err=>{
-        toast.error(err.message)
-       })
+        loginWithEmailPass(email, password)
+            .then(() => {
+                toast.success('Login Successfull')
+                form.reset()
+                navigate(from, { replace: true })
+            })
+            .catch(err => {
+                toast.error(err.message)
+            })
     }
     return (
         <div className=' w-full min-h-screen flex justify-center items-center'>
@@ -40,12 +40,12 @@ const Login = () => {
                     </div>
                     <input className='w-full px-4 py-4 bg-[#27B397] text-white rounded-2xl text-lg font-semibold cursor-pointer' type="submit" value="Login" />
                 </form>
-                <SocialLogin/>
+                <SocialLogin />
                 <div className='mt-4 text-sm font-semibold text-center text-neutral-500'>
                     <p>Don't Have An Account? <Link className='text-[#27B397]' to={'/regeister'}>Regeister</Link></p>
                 </div>
             </div>
-            
+
         </div>
     );
 };
