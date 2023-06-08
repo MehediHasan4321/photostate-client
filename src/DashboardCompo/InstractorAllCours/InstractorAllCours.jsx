@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../Utlites/useAuth';
 import { getInstractorCourse } from '../../AllApi/getInstractorCourse';
-import Rating from '../../Components/Rating/Rating';
 
 const InstractorAllCours = () => {
     const [course, setCourse] = useState([])

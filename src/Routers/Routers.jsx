@@ -8,6 +8,9 @@ import Login from '../Pages/Login/Login';
 import Dashboard from '../Pages/Dashboard/Dashboard';
 import AddCourse from '../DashboardCompo/AddCourse/AddCourse';
 import InstractorAllCours from '../DashboardCompo/InstractorAllCours/InstractorAllCours';
+import AllStudents from '../DashboardCompo/AllStudents/AllStudents';
+import AllInstractors from '../DashboardCompo/AllInstractors/AllInstractors';
+import AdminAllCourse from '../DashboardCompo/AdminAllCourse/AdminAllCourse';
 
 const Routers = createBrowserRouter([
     {
@@ -44,6 +47,18 @@ const Routers = createBrowserRouter([
             {
                 path:'/dashboard/myCourse',
                 element:<InstractorAllCours/>
+            },
+            {
+                path:'/dashboard/allStudents',
+                element:<AllStudents/>
+            },
+            {
+                path:'/dashboard/allInstractors',
+                element:<AllInstractors/>
+            },
+            {
+                path:"/dashboard/allCourses",
+                element:<AdminAllCourse/>
             }
         ]
     }

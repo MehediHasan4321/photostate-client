@@ -22,10 +22,10 @@ const DashboardNavbar = () => {
             }
             {
                 userRole === 'admin' && <>
-                    <Link><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>All Courses</button></Link>
+                    <Link to={'/dashboard/allCourses'}><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>All Courses</button></Link>
                     <Link><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>Courses Request</button></Link>
-                    <Link><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>All Students</button></Link>
-                    <Link><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>All Instractors</button></Link>
+                    <Link to={'/dashboard/allStudents'}><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>All Students</button></Link>
+                    <Link to={'/dashboard/allInstractors'}><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>All Instractors</button></Link>
                 </>
             }
         </div>
