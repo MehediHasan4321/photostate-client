@@ -6,6 +6,7 @@ import CourseDetails from '../Pages/CourseDetails/CourseDetails';
 import Regeister from '../Pages/Regeister/Regeister';
 import Login from '../Pages/Login/Login';
 import Dashboard from '../Pages/Dashboard/Dashboard';
+import AddCourse from '../DashboardCompo/AddCourse/AddCourse';
 
 const Routers = createBrowserRouter([
     {
@@ -33,7 +34,13 @@ const Routers = createBrowserRouter([
     },
     {
         path:'/dashboard',
-        element:<Dashboard/>
+        element:<Dashboard/>,
+        children:[
+            {
+                path:'/dashboard/addCourse',
+                element:<AddCourse/>
+            }
+        ]
     }
 ])
 
