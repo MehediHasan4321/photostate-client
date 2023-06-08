@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import CourseCard from '../CourseCard/CourseCard';
-import { getAllCourser } from '../../AllApi/getAlCourses';
+import { getInstractorCourse } from '../../AllApi/getInstractorCourse';
 
-const InstractorCourse = ({}) => {
+
+const InstractorCourse = ({email}) => {
     const [course,setCourses] = useState([])
-    getAllCourser()
+    getInstractorCourse(email)
     .then(data=>setCourses(data))
-  
+ 
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
             {

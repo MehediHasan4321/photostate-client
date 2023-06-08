@@ -6,7 +6,7 @@ import InstractorCourse from '../../Components/InstractorCourse/InstractorCourse
 
 const CourseDetails = () => {
     const courseInfo = useLoaderData()
-    const { name, price, rating, instractor, image, description, enrolledUser } = courseInfo || {}
+    const { name, price, rating, instractor, image, description, enrolledUser,email } = courseInfo || {}
     return (
         <div>
             <div className='flex gap-5'>
@@ -43,7 +43,7 @@ const CourseDetails = () => {
             <div className='mt-12'>
                 <h1 className='text-xl md:text-3xl font-semibold text-neutral-600'>This Instrators Anothre Coures</h1>
                 <div className='mt-10'>
-                    <InstractorCourse/>
+                    <InstractorCourse email={email}/>
                 </div>
             </div>
         </div>

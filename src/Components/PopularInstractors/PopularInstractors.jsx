@@ -14,7 +14,7 @@ const PopularInstractors = () => {
         <SectionTitle title={'Out Favorite Instrator'}/>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {
-                instractors.map(intractor=><InstractorCard instractor={intractor}/>)
+                instractors.map((intractor,index)=><InstractorCard key={index} instractor={intractor}/>)
             }
         </div>
         </>

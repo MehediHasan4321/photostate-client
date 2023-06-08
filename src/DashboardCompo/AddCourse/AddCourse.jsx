@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../Utlites/useAuth';
+import { uploadImage } from '../../AllApi/uploadImage';
+import { addCouse } from '../../AllApi/addCourse';
+import { Toaster, toast } from 'react-hot-toast';
 
 const AddCourse = () => {
+    const [uploadLoading, setUploadLoading] = useState(false)
     const courseCategory = ["Landscape Photography", "Wildlife Photography", "Street Photography", "Fashion Photography", "Sports Photography", "Travel Photography", "Fine Art Photography", "Wedding Photography"]
-    const {user} = useAuth()
-    const handleAddCourse = event=>{
+    const { user } = useAuth()
+    const handleAddCourse = event => {
         event.preventDefault()
+        setUploadLoading(true)
         const form = event.target;
         const name = form.name.value;
         const category = form.category.value;
@@ -13,8 +18,26 @@ const AddCourse = () => {
         const rating = form.rating.value;
         const image = form.image.files[0]
         const description = form.description.value
-        const course = {name,category,price,rating,image,description,enrolledStudents:[],email:user?.email}
-        console.log(course)
+
+
+        uploadImage(image).then(data => {
+            
+            const imgUrl = data.data.display_url
+            const course = { name, category, price, rating, image: imgUrl, description, enroledStudent : [], email: user?.email, instractor: { name: user.displayName, image: user.photoURL },status:'painding' }
+            addCouse(course)
+                .then(data => {
+                    if(data.insertedId){
+                        toast.success('Your Course added It weating for Admin Aprove')
+                        setUploadLoading(false)
+                        form.reset()
+                    }
+                    
+                })
+                .catch(err => {
+                    console.log(err.message)
+                    setUploadLoading(false)
+                })
+        })
     }
     return (
         <div className='flex justify-center mt-24'>
@@ -54,8 +77,9 @@ const AddCourse = () => {
                     <label htmlFor="description" className='text-md font-semibold'>Added Your Course Descriptions</label>
                     <textarea name="description" required id="description" className='w-full h-32 font-semibold text-md rounded-xl border-[1px] mt-2 pl-4' placeholder='Enter Your Course Descriptions'></textarea>
                 </div>
-                <input type="submit" required className='w-full py-4 bg-[#f2f2f2] rounded-xl text-md font-semibold' value="Upload Your Course" />
+                <input type="submit" required className='w-full py-4 bg-[#f2f2f2] rounded-xl text-md font-semibold' value={uploadLoading ? 'Course Uploading...' : "Upload Your Course"} />
             </form>
+            <Toaster/>
         </div>
     );
 };
