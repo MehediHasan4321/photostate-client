@@ -1,8 +1,10 @@
 import React from 'react';
 import Rating from '../Rating/Rating';
+import { Link } from 'react-router-dom';
 
 const CourseCard = ({course}) => {
-    const { name, image, rating, price, instractor ,enroledStudent } = course || {}
+    // console.log(course)
+    const { name, image, rating, price, instractor,_id,enroledStudent } = course || {}
     return (
         <div className='w-[450px] h-[550px] border-[1px] border-neutral-100 rounded-md hover:shadow-xl relative'>
             <img className='w-full h-[300px] rounded-md ' src={image} alt="class images" />
@@ -18,7 +20,7 @@ const CourseCard = ({course}) => {
                 </div>
             </div>
             <div className=' absolute bottom-0 w-full'>
-                <button className='w-full h-20 bg-black text-white font-semibold rounded-b-md'>View Details</button>
+                <Link to={`/courseDetails/${_id}`}><button className='w-full h-20 bg-black text-white font-semibold rounded-b-md'>View Details</button></Link>
             </div>
         </div>
     );

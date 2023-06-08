@@ -17,7 +17,8 @@ const Routers = createBrowserRouter([
             },
             {
                 path:'/courseDetails/:id',
-                element:<CourseDetails/>
+                element:<CourseDetails/>,
+                loader:({params})=>fetch(`${import.meta.env.VITE_BASE_URL}/courses/${params.id}`)
             },
             {
                 path:'/regeister',
