@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import Rating from '../../Components/Rating/Rating';
 import EnrolledUsers from '../../Components/EnrolledUsers/EnrolledUsers';
 import InstractorCourse from '../../Components/InstractorCourse/InstractorCourse';
@@ -14,7 +14,7 @@ const CourseDetails = () => {
                     <img className='w-full h-full object-cover rounded-md' src={image} alt="course images" />
                 </div>
                 <div>
-                    <div className='space-y-3 border-2 relative p-4'>
+                    <div className='space-y-3 relative p-4'>
                         <h1 className='text-3xl font-semibold'>{name ? name : 'course name'}</h1>
                         <p className='text-xl font-semibold'>price: ${price ? price : 'course price'}</p>
                         <p>Total Enrolled Students: 10</p>
@@ -25,11 +25,12 @@ const CourseDetails = () => {
                             <button className='px-8 py-2 bg-black text-white font-semibold'>Select</button>
                         </div>
                     </div>
-                    <div className='flex items-center gap-5'>
-                        <img className='w-16 h-16 rounded-full' src={instractor.image} alt="instracor img" />
-                        <div>
+                    <div className='flex items-center gap-5 mt-5'>
+                        <img className='w-20 h-20 rounded-full' src={instractor.image} alt="instracor img" />
+                        <div className='flex flex-col gap-2'>
                             <h1> {instractor?.name}</h1>
                             <p><Rating ratingNum={instractor.rating} /></p>
+                            <Link className='px-4 py-1 text-neutral-600 font-semibold rounded-xl text-center border-[1px] hover:bg-[#f2f2f2]'>About</Link>
                         </div>
                     </div>
                 </div>
