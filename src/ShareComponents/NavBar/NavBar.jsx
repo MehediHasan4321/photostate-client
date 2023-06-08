@@ -21,7 +21,7 @@ const NavBar = () => {
                     <NavLink to={'/'}>Home</NavLink>
                     <NavLink>Instructors</NavLink>
                     <NavLink>Classes</NavLink>
-                    <NavLink>Dashboard </NavLink>
+                    <NavLink to={'/dashboard'}>Dashboard </NavLink>
                     {
                         user ? <div className='flex items-center gap-3'>
                             <button onClick={handlLogout}>Logout</button>

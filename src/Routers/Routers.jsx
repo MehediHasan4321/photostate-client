@@ -5,6 +5,7 @@ import Home from '../Pages/Home/Home';
 import CourseDetails from '../Pages/CourseDetails/CourseDetails';
 import Regeister from '../Pages/Regeister/Regeister';
 import Login from '../Pages/Login/Login';
+import Dashboard from '../Pages/Dashboard/Dashboard';
 
 const Routers = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const Routers = createBrowserRouter([
                 element:<Login/>
             }
         ]
+    },
+    {
+        path:'/dashboard',
+        element:<Dashboard/>
     }
 ])
 
