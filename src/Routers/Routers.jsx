@@ -7,6 +7,7 @@ import Regeister from '../Pages/Regeister/Regeister';
 import Login from '../Pages/Login/Login';
 import Dashboard from '../Pages/Dashboard/Dashboard';
 import AddCourse from '../DashboardCompo/AddCourse/AddCourse';
+import InstractorAllCours from '../DashboardCompo/InstractorAllCours/InstractorAllCours';
 
 const Routers = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ const Routers = createBrowserRouter([
             {
                 path:'/dashboard/addCourse',
                 element:<AddCourse/>
+            },
+            {
+                path:'/dashboard/myCourse',
+                element:<InstractorAllCours/>
             }
         ]
     }
