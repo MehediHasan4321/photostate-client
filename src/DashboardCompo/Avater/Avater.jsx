@@ -1,8 +1,5 @@
 
-import { useAuth } from '../../Utlites/useAuth';
-
 const Avater = ({ user, role }) => {
-    console.log(role)
     return (
         <div className='flex flex-col gap-2 items-center'>
             <div className='relative'>

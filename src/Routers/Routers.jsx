@@ -11,6 +11,7 @@ import InstractorAllCours from '../DashboardCompo/InstractorAllCours/InstractorA
 import AllStudents from '../DashboardCompo/AllStudents/AllStudents';
 import AllInstractors from '../DashboardCompo/AllInstractors/AllInstractors';
 import AdminAllCourse from '../DashboardCompo/AdminAllCourse/AdminAllCourse';
+import PrivetRoute from '../PrivetRoute/PrivetRoute';
 
 const Routers = createBrowserRouter([
     {
@@ -23,7 +24,7 @@ const Routers = createBrowserRouter([
             },
             {
                 path:'/courseDetails/:id',
-                element:<CourseDetails/>,
+                element:<PrivetRoute><CourseDetails/></PrivetRoute>,
                 loader:({params})=>fetch(`${import.meta.env.VITE_BASE_URL}/courses/${params.id}`)
             },
             {
@@ -38,7 +39,7 @@ const Routers = createBrowserRouter([
     },
     {
         path:'/dashboard',
-        element:<Dashboard/>,
+        element:<PrivetRoute><Dashboard/></PrivetRoute>,
         children:[
             {
                 path:'/dashboard/addCourse',
