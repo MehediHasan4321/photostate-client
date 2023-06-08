@@ -5,7 +5,7 @@ const NavBar = () => {
     return (
         <div className='w-full bg-[#f2f2f2] h-20 fixed opacity-90 z-10'>
             <div className='container mx-auto flex justify-between items-center h-full text-neutral-800'>
-                <Link className=' uppercase flex items-center gap-2 cursor-pointer'>
+                <Link to={'/'} className=' uppercase flex items-center gap-2 cursor-pointer'>
                     <BsCameraFill size={'60'} />
                     <div>
                         <h1 className='text-2xl font-semibold'>Photostat</h1>
@@ -13,11 +13,11 @@ const NavBar = () => {
                     </div>
                 </Link>
                 <div className='flex flex-row gap-5 font-semibold'>
-                    <NavLink>Home</NavLink>
+                    <NavLink to={'/'}>Home</NavLink>
                     <NavLink>Instructors</NavLink>
                     <NavLink>Classes</NavLink>
                     <NavLink>Dashboard </NavLink>
-                    <NavLink>Login</NavLink>
+                    <NavLink to={'/login'}>Login</NavLink>
                 </div>
             </div>
         </div>
