@@ -6,7 +6,7 @@ const PrivetRoute = ({ children }) => {
     const from = useLocation()
     const { user, loading } = useAuth()
     if (loading) {
-        return <Loader isLoading={loading} color={'#27B397'}/>
+        return <Loader isLoading={loading}/>
     }
     if (user) {
         return children
