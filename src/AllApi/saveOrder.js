@@ -3,10 +3,10 @@ export const saveOrder = async (id, user,course) => {
         course,
         user:{
             name:user.displayName,
-            email:user.email,
             image:user.photoURL
         },
-        orderId:id
+        orderId:id,
+        email:user.email
     }
     const res = await fetch(`${import.meta.env.VITE_BASE_URL}/courseOrder`, {
         method: "POST",

@@ -17,6 +17,8 @@ import StudentSelectedCourse from '../DashboardCompo/StudentSelectedCourse/Stude
 import StudentEnrolledCourse from '../DashboardCompo/StudentEnrolledCourse/StudentEnrolledCourse';
 import StudentPaymentHistory from '../DashboardCompo/StudentPaymentHistory/StudentPaymentHistory';
 import AllCurses from '../Pages/AllCurses/AllCurses';
+import Payment from '../DashboardCompo/Payment/Payment';
+import Instractor from '../Pages/Instractor/Instractor';
 
 const Routers = createBrowserRouter([
     {
@@ -44,6 +46,11 @@ const Routers = createBrowserRouter([
                 path:'/allCourses',
                 element:<AllCurses/>,
                 loader:()=>fetch(`${import.meta.env.VITE_BASE_URL}/courses`)
+            },
+            {
+                path:'/instractor/:email',
+                element:<Instractor/>,
+                loader:({params})=>fetch(`http://localhost:5000/instractor/${params.email}`)
             }
         ]
     },
@@ -87,6 +94,10 @@ const Routers = createBrowserRouter([
             {
                 path:'/dashboard/paymentHistory',
                 element:<StudentPaymentHistory/>
+            },
+            {
+                path:'/dashboard/payment',
+                element:<Payment/>
             }
         ]
     }

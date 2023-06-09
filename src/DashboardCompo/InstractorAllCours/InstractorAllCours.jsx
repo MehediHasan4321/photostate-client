@@ -55,6 +55,7 @@ const InstractorAllCours = () => {
                             <th>Category</th>
                             <th>Enroled Student</th>
                             <th>Price</th>
+                            <th>Quantity</th>
                             <th>Status</th>
                             <th>Updata</th>
                             <th>Cancel</th>
@@ -83,6 +84,7 @@ const InstractorAllCours = () => {
                                     <td className='font-bold'>{cours.category}</td>
                                     <td className='font-bold'>{cours.enroledStudent.length}</td>
                                     <td className='font-bold'>Price: ${cours.price}</td>
+                                    <td className='font-bold'>{cours?.quantity}</td>
                                     <td className='font-bold'>{cours.status}</td>
                                     <th>
                                         <Link to={`/dashboard/updateCourse/${cours._id}`} className="btn btn-ghost btn-xs font-bold">Updata</Link>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../Utlites/useAuth';
 import { findOrderByEmail } from '../../AllApi/findOrderByEmail';
+import Rating from '../../Components/Rating/Rating';
+import { Link } from 'react-router-dom';
 
 
 const StudentSelectedCourse = () => {
@@ -10,19 +12,22 @@ const StudentSelectedCourse = () => {
     findOrderByEmail(user.email).then(data => {
         setSelected(data)
     })
-    console.log(selected)
+
     
     return (
         <div className="overflow-x-auto">
             <table className="table">
                 {/* head */}
                 <thead>
-                    <tr>
+                    <tr className='text-lg'>
                         <th>#</th>
                         <th>Course</th>
+                        <th>Instractor</th>
+                        <th>Course Rating</th>
                         <th>Price</th>
-                        <th>Staatus</th>
+                        
                         <th>Cancel</th>
+                        <th>pay</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,24 +40,36 @@ const StudentSelectedCourse = () => {
                         <td>
                             <div className="flex items-center space-x-3">
                                 <div className="avatar">
-                                    <div className="mask mask-squircle w-12 h-12">
-                                        <img src={order.image} alt="Avatar Tailwind CSS Component" />
+                                    <div className="mask mask-squircle w-20 h-20">
+                                        <img src={order?.course?.image} alt="Avatar Tailwind CSS Component" />
                                     </div>
                                 </div>
-                                <div>
-                                    <div className="font-bold">{order.name}</div>
-                                    <div className="text-sm opacity-50"></div>
+                                <div className='w-60'>
+                                    <div className="font-bold">{order?.course?.name}</div>
                                 </div>
                             </div>
                         </td>
                         <td>
-                            Zemlak, Daniel and Leannon
-                            <br />
-                            <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                            <div className="flex items-center space-x-3">
+                                <div className="avatar">
+                                    <div className="mask mask-squircle w-20 h-20">
+                                        <img src={order?.course?.instractor.image} alt="Avatar Tailwind CSS Component" />
+                                    </div>
+                                </div>
+                                <div className='w-60'>
+                                    <div className="font-bold">{order?.course?.instractor.name}</div>
+                                    
+                                </div>
+                            </div>
                         </td>
-                        <td>Purple</td>
+                        <td><Rating ratingNum={order?.course?.rating}/></td>
+                        <td>Price : ${order?.course?.price}</td>
+                        
                         <th>
-                            <button className="btn btn-ghost btn-xs">details</button>
+                            <button className="btn btn-ghost btn-xs">Cancel Order</button>
+                        </th>
+                        <th>
+                            <Link to={'/dashboard/payment'} className="btn btn-ghost btn-xs">pay ${order?.course?.price}</Link>
                         </th>
                     </tr>)
                     }

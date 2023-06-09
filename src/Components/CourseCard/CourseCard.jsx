@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const CourseCard = ({course}) => {
     // console.log(course)
-    const { name, image, rating, price, instractor,_id,enroledStudent } = course || {}
+    const { name, image, rating, price, instractor,_id,enroledStudent,quantity=0 } = course || {}
     return (
         <div className='w-[450px] h-[550px] border-[1px] border-neutral-100 rounded-md hover:shadow-xl relative'>
             <img className='w-full h-[300px] rounded-md ' src={image} alt="class images" />
@@ -16,11 +16,11 @@ const CourseCard = ({course}) => {
                 </div>
                 <div className='flex justify-between  items-center mt-4'>
                     <p className='text-lg font-semibold'>Enrolled Students {enroledStudent.length}</p>
-                    
+                    <p className='text-lg font-semibold'>Available Seat {parseFloat(quantity) - parseFloat(enroledStudent.length) }</p>
                 </div>
             </div>
             <div className=' absolute bottom-0 w-full'>
-                <Link to={`/courseDetails/${_id}`}><button className='w-full h-20 bg-black text-white font-semibold rounded-b-md'>View Details</button></Link>
+                <Link to={`/courseDetails/${_id}`}><button disabled={quantity === enroledStudent.length} className='w-full h-20 bg-black text-white font-semibold rounded-b-md disabled:bg-gray-600'>View Details</button></Link>
             </div>
         </div>
     );

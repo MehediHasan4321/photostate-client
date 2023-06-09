@@ -45,6 +45,7 @@ const CourseDetails = () => {
                 setStatus(false)
             })
     }
+   
     return (
         <div>
             <div className='flex gap-5'>
@@ -68,7 +69,7 @@ const CourseDetails = () => {
                         <div className='flex flex-col gap-2'>
                             <h1> {instractor?.name}</h1>
                             <p><Rating ratingNum={instractor.rating} /></p>
-                            <Link className='px-4 py-1 text-neutral-600 font-semibold rounded-xl text-center border-[1px] hover:bg-[#f2f2f2]'>About</Link>
+                            <Link to={`/instractor/${email}`} className='px-4 py-1 text-neutral-600 font-semibold rounded-xl text-center border-[1px] hover:bg-[#f2f2f2]'>About</Link>
                         </div>
                     </div>
                 </div>

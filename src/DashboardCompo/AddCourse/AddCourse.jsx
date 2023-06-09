@@ -18,20 +18,21 @@ const AddCourse = () => {
         const rating = form.rating.value;
         const image = form.image.files[0]
         const description = form.description.value
+        const quantity = form.quantity.value
 
 
         uploadImage(image).then(data => {
-            
+
             const imgUrl = data.data.display_url
-            const course = { name, category, price, rating, image: imgUrl, description, enroledStudent : [], email: user?.email, instractor: { name: user.displayName, image: user.photoURL },status:'painding' }
+            const course = { name, category, price, rating, image: imgUrl, description, enroledStudent: [], email: user?.email, instractor: { name: user.displayName, image: user.photoURL }, status: 'painding', quantity }
             addCouse(course)
                 .then(data => {
-                    if(data.insertedId){
+                    if (data.insertedId) {
                         toast.success('Your Course added It weating for Admin Aprove')
                         setUploadLoading(false)
                         form.reset()
                     }
-                    
+
                 })
                 .catch(err => {
                     console.log(err.message)
@@ -57,15 +58,22 @@ const AddCourse = () => {
                     </div>
                 </div>
                 <div className='flex gap-2'>
-                    <div className='w-1/3'>
+                    <div className='w-1/2'>
                         <label htmlFor="price" className='text-md font-semibold'>Your Course Price</label>
                         <input required className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="number" name="price" id="price" placeholder='Enter Your Course Price' />
                     </div>
-                    <div className='w-1/3'>
+                    <div className='w-1/2'>
                         <label htmlFor="rating" className='text-md font-semibold'>Your Course Rating</label>
                         <input required className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="text" name="rating" id="rating" placeholder='Enter Your Course Rating' />
                     </div>
-                    <div className='w-1/3'>
+
+                </div>
+                <div className="flex gap-2">
+                    <div className='w-1/2'>
+                        <label htmlFor="quantity" className='text-md font-semibold'>Set Your Course Student Qunatity</label>
+                        <input required className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="number" name="quantity" id="quantity" placeholder='Enter Student Quantity' />
+                    </div>
+                    <div className='w-1/2'>
                         <label htmlFor="image" className='text-md font-semibold'>Your Course Image</label>
                         <div className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2'>
                             <input required className='  ' type="file" name="image" id="image" />
@@ -79,7 +87,7 @@ const AddCourse = () => {
                 </div>
                 <input type="submit" required className='w-full py-4 bg-[#f2f2f2] rounded-xl text-md font-semibold' value={uploadLoading ? 'Course Uploading...' : "Upload Your Course"} />
             </form>
-            <Toaster/>
+            <Toaster />
         </div>
     );
 };

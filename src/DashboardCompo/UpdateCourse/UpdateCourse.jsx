@@ -7,7 +7,7 @@ import { PropagateLoader } from 'react-spinners';
 const UpdateCourse = () => {
     const courseCategory = ["Landscape Photography", "Wildlife Photography", "Street Photography", "Fashion Photography", "Sports Photography", "Travel Photography", "Fine Art Photography", "Wedding Photography"]
     const data = useLoaderData()
-    const [updateLoading,setUpdateing] = useState(false)
+    const [updateLoading, setUpdateing] = useState(false)
     const navigate = useNavigate()
     const handleUpdataCourse = event => {
         setUpdateing(true)
@@ -19,16 +19,18 @@ const UpdateCourse = () => {
         const rating = form.rating.value;
         const image = form.image.value
         const description = form.description.value
-        const updataCourse = { name, category, price, rating, image, description }
+        const quantity = form.quantity.value
+        const updataCourse = { name, category, price, rating, image, description,quantity }
+    
         //console.log(updataCourse)
-        updateCourseById(updataCourse,data._id).then(data=>{
-            if(data.modifiedCount>0){
+        updateCourseById(updataCourse, data._id).then(data => {
+            if (data.modifiedCount > 0) {
                 setUpdateing(false)
                 navigate('/dashboard/myCourse')
-            }
-            
+            }else{setUpdateing(false)}
+
         })
-        .catch(err=>setUpdateing(false))
+            .catch(err => setUpdateing(false))
     }
     return (
         <div className='flex justify-center mt-24'>
@@ -40,11 +42,7 @@ const UpdateCourse = () => {
                     </div>
                     <div className='w-1/2'>
                         <label htmlFor="category" className='text-md font-semibold'>Your Course Name</label>
-                        <select required className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' name='category' id='category'>
-                            {
-                                courseCategory.map((item, index) => <option key={index}>{item}</option>)
-                            }
-                        </select>
+                        <input required defaultValue={data?.category} disabled className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' name='category' id='category'/>
                     </div>
                 </div>
                 <div className='flex gap-2'>
@@ -56,15 +54,19 @@ const UpdateCourse = () => {
                         <label htmlFor="rating" className='text-md font-semibold'>Your Course Rating</label>
                         <input required defaultValue={data?.rating} className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="text" name="rating" id="rating" placeholder='Enter Your Course Rating' />
                     </div>
-                    
+
                 </div>
-                <div className='w-full'>
-                        <label htmlFor="image" className='text-md font-semibold'>Your Course Image</label>
+                <div className="flex gap-2">
+                <div className='w-1/2'>
+                    <label htmlFor="image" className='text-md font-semibold'>Your Course Image</label>
 
-                        <input required defaultValue={data?.image} className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="url" name="image" id="image" />
-
-
-                    </div>
+                    <input required defaultValue={data?.image} className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="url" name="image" id="image" />
+                </div>
+                <div className='w-1/2'>
+                    <label htmlFor="quantity" className='text-md font-semibold'>Set Your Course Student Qunatity</label>
+                    <input required defaultValue={data?.quantity} className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="number" name="quantity" id="quantity" placeholder='Enter Student Quantity' />
+                </div>
+                </div>
                 <div>
                     <label htmlFor="description" className='text-md font-semibold'>Added Your Course Descriptions</label>
                     <textarea name="description" defaultValue={data?.description} required id="description" className='w-full h-32 font-semibold text-md rounded-xl border-[1px] mt-2 pl-4' placeholder='Enter Your Course Descriptions'></textarea>
