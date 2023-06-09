@@ -13,6 +13,10 @@ import AllInstractors from '../DashboardCompo/AllInstractors/AllInstractors';
 import AdminAllCourse from '../DashboardCompo/AdminAllCourse/AdminAllCourse';
 import PrivetRoute from '../PrivetRoute/PrivetRoute';
 import UpdateCourse from '../DashboardCompo/UpdateCourse/UpdateCourse';
+import StudentSelectedCourse from '../DashboardCompo/StudentSelectedCourse/StudentSelectedCourse';
+import StudentEnrolledCourse from '../DashboardCompo/StudentEnrolledCourse/StudentEnrolledCourse';
+import StudentPaymentHistory from '../DashboardCompo/StudentPaymentHistory/StudentPaymentHistory';
+import AllCurses from '../Pages/AllCurses/AllCurses';
 
 const Routers = createBrowserRouter([
     {
@@ -35,6 +39,11 @@ const Routers = createBrowserRouter([
             {
                 path:'/login',
                 element:<Login/>
+            },
+            {
+                path:'/allCourses',
+                element:<AllCurses/>,
+                loader:()=>fetch(`${import.meta.env.VITE_BASE_URL}/courses`)
             }
         ]
     },
@@ -66,6 +75,18 @@ const Routers = createBrowserRouter([
                 path:'/dashboard/updateCourse/:id',
                 element:<UpdateCourse/>,
                 loader:({params})=>fetch(`${import.meta.env.VITE_BASE_URL}/courses/${params.id}`)
+            },
+            {
+                path:'/dashboard/selectedClass',
+                element:<StudentSelectedCourse/>
+            },
+            {
+                path:'/dashboard/enrolledClass',
+                element:<StudentEnrolledCourse/>
+            },
+            {
+                path:'/dashboard/paymentHistory',
+                element:<StudentPaymentHistory/>
             }
         ]
     }

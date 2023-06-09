@@ -20,7 +20,7 @@ const NavBar = () => {
                 <div className='flex flex-row gap-5 font-semibold items-center'>
                     <NavLink to={'/'}>Home</NavLink>
                     <NavLink>Instructors</NavLink>
-                    <NavLink>Classes</NavLink>
+                    <NavLink to={'/allCourses'}>Courses</NavLink>
                     <NavLink to={'/dashboard'}>Dashboard </NavLink>
                     {
                         user ? <div className='flex items-center gap-3'>

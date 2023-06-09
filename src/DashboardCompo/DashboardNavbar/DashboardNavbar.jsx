@@ -8,9 +8,9 @@ const DashboardNavbar = () => {
         <div className='mt-5 px-4 flex flex-col gap-4'>
             {
                 userRole === 'student' && <>
-                    <Link><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>My Enrolled Class</button></Link>
-                    <Link><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>My Select Class</button></Link>
-                    <Link><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>My Payments History</button></Link>
+                    <Link to={'/dashboard/enrolledClass'}><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>My Enrolled Class</button></Link>
+                    <Link to={'/dashboard/selectedClass'}><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>My Select Class</button></Link>
+                    <Link to={'/dashboard/paymentHistory'}><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>My Payments History</button></Link>
                 </>
             }
             {
