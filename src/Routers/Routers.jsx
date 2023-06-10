@@ -20,6 +20,7 @@ import AllCurses from '../Pages/AllCurses/AllCurses';
 import Payment from '../DashboardCompo/Payment/Payment';
 import Instractor from '../Pages/Instractor/Instractor';
 import ManageCourseRequest from '../DashboardCompo/ManageCourseRequest/ManageCourseRequest';
+import { getCoursesByStatus } from '../AllApi/getCoursesByStatus';
 
 const Routers = createBrowserRouter([
     {
@@ -46,7 +47,7 @@ const Routers = createBrowserRouter([
             {
                 path:'/allCourses',
                 element:<AllCurses/>,
-                loader:()=>fetch(`${import.meta.env.VITE_BASE_URL}/courses`)
+                loader:()=>getCoursesByStatus('aprove')
             },
             {
                 path:'/instractor/:email',

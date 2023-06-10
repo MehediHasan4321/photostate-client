@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import CourseCard from '../CourseCard/CourseCard';
 import SectionTitle from '../../ShareComponents/SectionTitle/SectionTitle';
-import { getAllCourser } from '../../AllApi/getAlCourses';
+
+import { getCoursesByStatus } from '../../AllApi/getCoursesByStatus';
 
 const PopulerCourses = () => {
     const [courses,setCourses] = useState([])
     useEffect(()=>{
-        getAllCourser()
+        getCoursesByStatus('aprove')
         .then(data=>{
             setCourses(data)
         })
