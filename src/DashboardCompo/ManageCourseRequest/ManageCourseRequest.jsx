@@ -3,14 +3,14 @@ import Rating from '../../Components/Rating/Rating';
 import Swal from 'sweetalert2';
 import { deleteCourseById } from '../../AllApi/deleteCourseById'
 import { updateCourseById } from '../../AllApi/updateCourseById';
-import { getAllCourser } from '../../AllApi/getAlCourses';
 import { Toaster, toast } from 'react-hot-toast';
+import { getCoursesByStatus } from '../../AllApi/getCoursesByStatus';
 
 const ManageCourseRequest = () => {
     const [aproveCourse, setAproveCourse] = useState([])
     const [fedbackId,setFedbackId] = useState('')
     useEffect(() => {
-        getAllCourser().then(course => setAproveCourse(course))
+        getCoursesByStatus('painding').then(course => setAproveCourse(course))
     }, [])
 
     const handleDelete = id => {

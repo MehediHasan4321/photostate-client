@@ -52,7 +52,7 @@ const Routers = createBrowserRouter([
             {
                 path:'/instractor/:email',
                 element:<Instractor/>,
-                loader:({params})=>fetch(`http://localhost:5000/instractor/${params.email}`)
+                loader:({params})=>fetch(`${import.meta.env.VITE_BASE_URL}/instractor/${params.email}`)
             }
         ]
     },
@@ -98,8 +98,9 @@ const Routers = createBrowserRouter([
                 element:<StudentPaymentHistory/>
             },
             {
-                path:'/dashboard/payment',
-                element:<Payment/>
+                path:'/dashboard/payment/:id',
+                element:<Payment/>,
+                loader:({params})=>fetch(`http://localhost:5000/courses/${params.id}`)
             },
             {
                 path:'/dashboard/manageCourseRequest',

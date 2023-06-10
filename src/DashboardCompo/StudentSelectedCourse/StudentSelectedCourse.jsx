@@ -13,9 +13,12 @@ const StudentSelectedCourse = () => {
     const { user } = useAuth()
     const [selected, setSelected] = useState([])
     const [deleteStatus, setDeleteStatus] = useState(false)
-    findOrderByEmail(user.email).then(data => {
+    findOrderByEmail(user.email,'selecet').then(data => {
         setSelected(data)
+        
     })
+     
+     
     const handleCancelCourse = id => {
         Swal.fire({
             title: 'Are you sure?',
@@ -105,7 +108,7 @@ const StudentSelectedCourse = () => {
                                 <button onClick={() => handleCancelCourse(order?._id)} className="btn btn-ghost btn-xs">{deleteStatus ? "Canceling..." : "Cancel Course"}</button>
                             </th>
                             <th>
-                                <Link to={'/dashboard/payment'} className="btn btn-ghost btn-xs">pay ${order?.course?.price}</Link>
+                                <Link to={`/dashboard/payment/${order?.course?._id}`} className="btn btn-ghost btn-xs">pay ${order?.course?.price}</Link>
                             </th>
                         </tr>)
                     }
