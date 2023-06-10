@@ -5,8 +5,9 @@ export const saveOrder = async (id, user,course) => {
             name:user.displayName,
             image:user.photoURL
         },
-        orderId:id,
-        email:user.email
+        email:user.email,
+        courseId:id,
+        orderStatus:'selecet'
     }
     const res = await fetch(`${import.meta.env.VITE_BASE_URL}/courseOrder`, {
         method: "POST",

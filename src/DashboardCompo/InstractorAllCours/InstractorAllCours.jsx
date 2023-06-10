@@ -55,7 +55,7 @@ const InstractorAllCours = () => {
                             <th>Category</th>
                             <th>Enroled Student</th>
                             <th>Price</th>
-                            <th>Quantity</th>
+                            <th>Seat</th>
                             <th>Status</th>
                             <th>Updata</th>
                             <th>Cancel</th>

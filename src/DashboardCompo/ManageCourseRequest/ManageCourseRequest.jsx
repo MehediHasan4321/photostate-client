@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
-import { getAllCourser } from '../../AllApi/getAlCourses';
+import { useEffect, useState } from 'react';
 import Rating from '../../Components/Rating/Rating';
 import Swal from 'sweetalert2';
-import { deleteCourseById } from '../../AllApi/deleteCourseById';
+import { deleteCourseById } from '../../AllApi/deleteCourseById'
+import { updateCourseById } from '../../AllApi/updateCourseById';
+import { getAllCourser } from '../../AllApi/getAlCourses';
 
-const AdminAllCourse = () => {
-    const [courses, setCourses] = useState([])
-    getAllCourser().then(data => setCourses(data))
+const ManageCourseRequest = () => {
+    const [aproveCourse,setAproveCourse] = useState([])
+    
+    useEffect(()=>{
+        getAllCourser().then(course=>setAproveCourse(course))
+    },[])
 
     const handleDelete = id => {
 
@@ -41,6 +45,51 @@ const AdminAllCourse = () => {
             }
         })
     }
+    const handleAprove = id => {
+        const updateStatus = {
+            status:"aprove"
+        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to Aprove This Course",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Aprove it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(id)
+                updateCourseById(updateStatus,id).then(res=>{
+                    if(res.modifiedCount>0){
+                        Swal.fire(
+                            'Aproved!',
+                            'Your file has been Aproved.',
+                            'success'
+                        )
+                    }
+                })
+                .catch(err=>{
+                    console.log(err.message)
+                })
+                
+            }
+            else{
+                Swal.fire(
+                    'Aproved!',
+                    "Your file Dosen't Aproved.",
+                    'error'
+                )
+            }
+        })
+
+    }
+
+    const handleFedback = id=>{
+        console.log(id)
+    }
+
+
     return (
         <>
             <div className="overflow-x-auto">
@@ -53,16 +102,15 @@ const AdminAllCourse = () => {
                             <th>Instractor</th>
                             <th>Category</th>
                             <th>Total Seat</th>
-                            <th>Total Enrolled</th>
-                            <th>Total Seleceted</th>
-                            <th>Course Status</th>
+                            <th>Deny Course</th>
+                            <th>Aprove Course</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-
+    
                         {
-                            courses.map((course, index) => <tr key={course._id}>
+                            aproveCourse.map((course, index) => <tr key={course._id}>
                                 <th>
                                     {index + 1}
                                 </th>
@@ -91,13 +139,12 @@ const AdminAllCourse = () => {
                                             <div className="badge badge-ghost badge-sm">{course?.email}</div>
                                         </div>
                                     </div>
-
+    
                                 </td>
                                 <td>{course.category}</td>
                                 <td>{course.quantity}</td>
-                                <td>00</td>
-                                <td>00</td>
-                                <td><button className="btn btn-ghost btn-xs">{course.status}</button></td>
+                                <td><button disabled={course.status === 'aprove'} onClick={() => handleAprove(course._id)} className="btn btn-ghost btn-xs">Aprove</button></td>
+                                <td><button disabled={course.status === 'aprove'} className="btn btn-ghost btn-xs" onClick={() => window.my_modal_2.showModal()}>Deny</button></td>
                                 <th>
                                     <button onClick={() => handleDelete(course._id)} className="btn btn-ghost btn-xs">Delete</button>
                                 </th>
@@ -107,11 +154,10 @@ const AdminAllCourse = () => {
                 </table>
             </div>
             {/* Open the modal using ID.showModal() method */}
-            <button className="btn" onClick={() => window.my_modal_2.showModal()}>open modal</button>
             <dialog id="my_modal_2" className="modal">
-                <form method="dialog" className="modal-box">
-                    <h3 className="font-bold text-lg">Hello!</h3>
-                    <p className="py-4">Press ESC key or click outside to close</p>
+                <form onSubmit={()=>handleFedback()} method="dialog" className="modal-box">
+                    <textarea name="fedback" id="fedback" className='w-full h-32 text-neutral-600 text-md font-semibold p-2 border-[1px] rounded-lg' placeholder='Enter Fedback Whay You Want To Deny This Course'></textarea>
+                    <input className='px-6 py-2 bg-black text-white font-semibold rounded-lg' type="submit" value="Send Fedback" />
                 </form>
                 <form method="dialog" className="modal-backdrop">
                     <button>close</button>
@@ -119,6 +165,8 @@ const AdminAllCourse = () => {
             </dialog>
         </>
     );
-};
+}
 
-export default AdminAllCourse;
+
+
+export default ManageCourseRequest;

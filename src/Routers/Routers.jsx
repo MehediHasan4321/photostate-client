@@ -19,6 +19,7 @@ import StudentPaymentHistory from '../DashboardCompo/StudentPaymentHistory/Stude
 import AllCurses from '../Pages/AllCurses/AllCurses';
 import Payment from '../DashboardCompo/Payment/Payment';
 import Instractor from '../Pages/Instractor/Instractor';
+import ManageCourseRequest from '../DashboardCompo/ManageCourseRequest/ManageCourseRequest';
 
 const Routers = createBrowserRouter([
     {
@@ -98,6 +99,10 @@ const Routers = createBrowserRouter([
             {
                 path:'/dashboard/payment',
                 element:<Payment/>
+            },
+            {
+                path:'/dashboard/manageCourseRequest',
+                element:<ManageCourseRequest/>
             }
         ]
     }
