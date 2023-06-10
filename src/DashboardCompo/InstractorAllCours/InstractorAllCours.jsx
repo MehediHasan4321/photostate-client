@@ -57,6 +57,7 @@ const InstractorAllCours = () => {
                             <th>Price</th>
                             <th>Seat</th>
                             <th>Status</th>
+                            <th>Fedback</th>
                             <th>Updata</th>
                             <th>Cancel</th>
                         </tr>
@@ -86,6 +87,7 @@ const InstractorAllCours = () => {
                                     <td className='font-bold'>Price: ${cours.price}</td>
                                     <td className='font-bold'>{cours?.quantity}</td>
                                     <td className='font-bold'>{cours.status}</td>
+                                    <td>{cours.status ==='deny'? 'feadback Found': "No Fedback"}</td>
                                     <th>
                                         <Link to={`/dashboard/updateCourse/${cours._id}`} className="btn btn-ghost btn-xs font-bold">Updata</Link>
                                     </th>

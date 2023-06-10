@@ -20,7 +20,6 @@ const AddCourse = () => {
         const description = form.description.value
         const quantity = form.quantity.value
 
-
         uploadImage(image).then(data => {
 
             const imgUrl = data.data.display_url
