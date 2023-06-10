@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import Rating from '../../Components/Rating/Rating';
 import EnrolledUsers from '../../Components/EnrolledUsers/EnrolledUsers';
@@ -10,7 +10,7 @@ const CourseDetails = () => {
     const courseInfo = useLoaderData()
     const [status, setStatus] = useState(false)
     const { user } = useAuth()
-    const { name, price, rating, instractor, image, description, enroledStudent, email, _id } = courseInfo || {}
+    const { name, price, rating, instractor, image, description, enroledStudent, email, _id,duration,quantity } = courseInfo || {}
     const handlSelectCourse = (id, user, course) => {
         setStatus(true)
         saveOrder(id, user, course).then(data => {
@@ -39,6 +39,8 @@ const CourseDetails = () => {
                         <h1 className='text-3xl font-semibold'>{name ? name : 'course name'}</h1>
                         <p className='text-xl font-semibold'>price: ${price ? price : 'course price'}</p>
                         <p>Total Enrolled Students: {enroledStudent?.length}</p>
+                        <p>Available Seat : {parseFloat(quantity) - parseFloat(enroledStudent.length)}</p>
+                        <p>Course duration : {duration? `${duration} Months`:'Not Found'} </p>
                         <p><Rating ratingNum={rating} /></p>
 
                         <div className='flex gap-5 items-center pt-12'>

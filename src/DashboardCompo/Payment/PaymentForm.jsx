@@ -4,6 +4,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { useAuth } from '../../Utlites/useAuth';
 import useAxiosSecures from '../../Utlites/useAxiosSecures';
 import { updateOrderById } from '../../AllApi/updateOrderById';
+import { updateCourseById } from '../../AllApi/updateCourseById';
 
 const PaymentForm = ({ price, course }) => {
     const [cardError, setCardError] = useState('')
@@ -63,7 +64,7 @@ const PaymentForm = ({ price, course }) => {
             console.log('paymentError', paymentError)
             setProcessing('payment unsuccess')
         }
-        
+
         if (paymentIntent.status === 'succeeded') {
             
             setProcessing('save payment')
@@ -80,32 +81,48 @@ const PaymentForm = ({ price, course }) => {
                 rating: course.rating,
                 studentEmail: user?.email,
                 data: new Date(),
-                transactionId: paymentIntent.id
+                transactionId: paymentIntent.id,
+                image:course.image,
+                paymentMehtod:paymentIntent.payment_method_types[0]
             }
-            const updataCourse = {
+            const updataOrder = {
                 orderStatus: 'enrolled'
             }
-
-            axiosSerure.post('payment', paymentHistory)
+            const updateCoures = {
+                enroledStudent: [user.email, ...course.enroledStudent]
+            }
+            axiosSerure.post('/payment', paymentHistory)
                 .then(res => {
                     if (res.data.insertedId) {
                         setProcessing('update status')
-                        updateOrderById(course._id, updataCourse)
+                        updateOrderById(course._id, updataOrder)
                             .then(res => {
-                                if (res.modifiedCount>0) {
-                                    toast.success('Payments successfull')
-                                    setProcessing('success')
-                                    setTransactionId(paymentIntent.id)
+                                if (res.modifiedCount > 0) {
+                                    setProcessing('Update Course')
+                                    updateCourseById(updateCoures, course._id)
+                                        .then(res => {
+                                            if (res.modifiedCount > 0) {
+                                                toast.success('Payments successfull')
+                                                setProcessing('Payment Success')
+                                                setTransactionId(paymentIntent.id)
+                                            }
+
+                                        })
+                                        .catch(err => toast.error(err.message))
+
                                 }
-                                
+
                             })
                     }
                 })
-            
+
+
 
 
         }
     }
+
+
     return (
         <>
             <form onSubmit={handleSubmit}>

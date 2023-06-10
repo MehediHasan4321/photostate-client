@@ -19,11 +19,12 @@ const AddCourse = () => {
         const image = form.image.files[0]
         const description = form.description.value
         const quantity = form.quantity.value
+        const duration = form.duration.value
 
         uploadImage(image).then(data => {
 
             const imgUrl = data.data.display_url
-            const course = { name, category, price, rating, image: imgUrl, description, enroledStudent: [], email: user?.email, instractor: { name: user.displayName, image: user.photoURL }, status: 'painding', quantity }
+            const course = { name, category, price, rating, image: imgUrl, description, enroledStudent: [], email: user?.email, instractor: { name: user.displayName, image: user.photoURL }, status: 'painding', quantity,duration }
             addCouse(course)
                 .then(data => {
                     if (data.insertedId) {
@@ -78,6 +79,20 @@ const AddCourse = () => {
                             <input required className='  ' type="file" name="image" id="image" />
                         </div>
 
+                    </div>
+                </div>
+                <div className="flex gap-2">
+                <div className='w-1/3'>
+                        <label htmlFor="duration" className='text-md font-semibold'>Set Your Course Duration</label>
+                        <input required className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="number" name="duration" id="duration" placeholder='Set Course Duration'/>
+                    </div>
+                    <div className='w-1/3'>
+                        <label htmlFor="instractorName" className='text-md font-semibold'>Instractor Name</label>
+                        <input required className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="text" name="instractorName" id="instractorName" value={user.displayName} />
+                    </div>
+                    <div className='w-1/3'>
+                        <label htmlFor="instractorEmail" className='text-md font-semibold'>Instractor Email</label>
+                        <input required className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="text" name="instractorEmail" id="instractorEmail" value={user.email} />
                     </div>
                 </div>
                 <div>

@@ -20,7 +20,8 @@ const UpdateCourse = () => {
         const image = form.image.value
         const description = form.description.value
         const quantity = form.quantity.value
-        const updataCourse = { name, category, price, rating, image, description,quantity }
+        const duration = form.duration.value
+        const updataCourse = { name, category, price, rating, image, description,quantity,duration }
     
         //console.log(updataCourse)
         updateCourseById(updataCourse, data._id).then(data => {
@@ -46,13 +47,17 @@ const UpdateCourse = () => {
                     </div>
                 </div>
                 <div className='flex gap-2'>
-                    <div className='w-1/2'>
+                    <div className='w-1/3'>
                         <label htmlFor="price" className='text-md font-semibold'>Your Course Price</label>
                         <input required defaultValue={data?.price} className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="number" name="price" id="price" placeholder='Enter Your Course Price' />
                     </div>
-                    <div className='w-1/2'>
+                    <div className='w-1/3'>
                         <label htmlFor="rating" className='text-md font-semibold'>Your Course Rating</label>
                         <input required defaultValue={data?.rating} className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="text" name="rating" id="rating" placeholder='Enter Your Course Rating' />
+                    </div>
+                    <div className='w-1/3'>
+                        <label htmlFor="duration" className='text-md font-semibold'>Your Course Rating</label>
+                        <input required defaultValue={data?.duration} className='text-md font-semibold py-4 w-full rounded-lg border-[1px] pl-4 mt-2' type="number" name="duration" id="duration" placeholder='Enter Your Course Duration' />
                     </div>
 
                 </div>

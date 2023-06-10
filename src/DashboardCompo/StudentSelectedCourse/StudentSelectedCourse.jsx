@@ -13,10 +13,12 @@ const StudentSelectedCourse = () => {
     const { user } = useAuth()
     const [selected, setSelected] = useState([])
     const [deleteStatus, setDeleteStatus] = useState(false)
-    findOrderByEmail(user.email,'selecet').then(data => {
-        setSelected(data)
-        
-    })
+    useEffect(()=>{
+        findOrderByEmail(user.email,'selecet').then(data => {
+            setSelected(data)
+            
+        })
+    },[user])
      
      
     const handleCancelCourse = id => {
@@ -105,7 +107,7 @@ const StudentSelectedCourse = () => {
                             <td>Price : ${order?.course?.price}</td>
 
                             <th>
-                                <button onClick={() => handleCancelCourse(order?._id)} className="btn btn-ghost btn-xs">{deleteStatus ? "Canceling..." : "Cancel Course"}</button>
+                                <button onClick={() => handleCancelCourse(order?._id)} className="btn btn-ghost btn-xs">{"Cancel Course"}</button>
                             </th>
                             <th>
                                 <Link to={`/dashboard/payment/${order?.course?._id}`} className="btn btn-ghost btn-xs">pay ${order?.course?.price}</Link>
