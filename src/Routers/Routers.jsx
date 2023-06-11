@@ -100,7 +100,7 @@ const Routers = createBrowserRouter([
             {
                 path:'/dashboard/payment/:id',
                 element:<Payment/>,
-                loader:({params})=>fetch(`http://localhost:5000/courses/${params.id}`)
+                loader:({params})=>fetch(`http://localhost:5000/courseOrderById/${params.id}`)
             },
             {
                 path:'/dashboard/manageCourseRequest',

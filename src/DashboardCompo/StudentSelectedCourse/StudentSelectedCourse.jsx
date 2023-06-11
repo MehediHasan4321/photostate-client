@@ -110,7 +110,7 @@ const StudentSelectedCourse = () => {
                                 <button onClick={() => handleCancelCourse(order?._id)} className="btn btn-ghost btn-xs">{"Cancel Course"}</button>
                             </th>
                             <th>
-                                <Link to={`/dashboard/payment/${order?.course?._id}`} className="btn btn-ghost btn-xs">pay ${order?.course?.price}</Link>
+                                <Link to={`/dashboard/payment/${order?._id}`} className="btn btn-ghost btn-xs">pay ${order?.course?.price}</Link>
                             </th>
                         </tr>)
                     }

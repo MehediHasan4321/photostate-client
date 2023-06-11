@@ -66,55 +66,54 @@ const PaymentForm = ({ price, course }) => {
         }
 
         if (paymentIntent.status === 'succeeded') {
-            
+
             setProcessing('save payment')
             const paymentHistory = {
-                courseId: course._id,
-                category: course.category,
-                name: course.name,
+                courseId: course.course._id,
+                category: course.course.category,
+                name: course.course.name,
                 instractor: {
-                    name: course.instractor.name,
-                    email: course.email,
-                    image: course.instractor.image
+                    name: course.course.instractor.name,
+                    email: course?.course?.email,
+                    image: course.course.instractor.image
                 },
-                price: course.price,
-                rating: course.rating,
+                price: course.course.price,
+                rating: course.course.rating,
                 studentEmail: user?.email,
                 data: new Date(),
                 transactionId: paymentIntent.id,
-                image:course.image,
-                paymentMehtod:paymentIntent.payment_method_types[0]
+                image: course.course.image,
+                paymentMehtod: paymentIntent.payment_method_types[0]
             }
             const updataOrder = {
-                orderStatus: 'enrolled'
+                orderStatus: "enrolled"
             }
             const updateCoures = {
-                enroledStudent: [user.email, ...course.enroledStudent]
+                enroledStudent: [user.email, ...course?.course?.enroledStudent]
             }
             axiosSerure.post('/payment', paymentHistory)
                 .then(res => {
                     if (res.data.insertedId) {
                         setProcessing('update status')
-                        updateOrderById(course._id, updataOrder)
-                            .then(res => {
-                                if (res.modifiedCount > 0) {
-                                    setProcessing('Update Course')
-                                    updateCourseById(updateCoures, course._id)
-                                        .then(res => {
-                                            if (res.modifiedCount > 0) {
-                                                toast.success('Payments successfull')
-                                                setProcessing('Payment Success')
-                                                setTransactionId(paymentIntent.id)
-                                            }
+                        updateOrderById(course._id, updataOrder).then(res => {
+                            if (res.modifiedCount > 0) {
+                                setProcessing('Save Order')
+                                updateCourseById(updateCoures, course.course._id)
+                                    .then(res => {
+                                        if (res.modifiedCount > 0) {
+                                            toast.success('Payments successfull')
+                                            setProcessing('Payment Success')
+                                            setTransactionId(paymentIntent.id)
+                                        } else { console.log(res) }
 
-                                        })
-                                        .catch(err => toast.error(err.message))
+                                    })
+                                    .catch(err => toast.error(err.message))
+                            } else { console.log(res) }
 
-                                }
+                        }).catch(err => console.log(err))
 
-                            })
                     }
-                })
+                }).catch(err => console.log(err))
 
 
 

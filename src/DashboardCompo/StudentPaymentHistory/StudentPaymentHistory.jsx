@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { getAllPaymentsHistory } from '../../AllApi/getAllPaymentsHistory';
 import Rating from '../../Components/Rating/Rating';
+import { useAuth } from '../../Utlites/useAuth';
 
 const StudentPaymentHistory = () => {
+    const {user} = useAuth()
     const [paymetsHistory,setPaymentsHistory] = useState([])
     useEffect(()=>{
-        getAllPaymentsHistory().then(res=>setPaymentsHistory(res))
-    },[])
+        getAllPaymentsHistory(user?.email).then(res=>setPaymentsHistory(res))
+    },[user])
     return (
         <div className="overflow-x-auto">
             <table className="table">
@@ -54,15 +56,13 @@ const StudentPaymentHistory = () => {
                                     </div>
                                 </div>
                             </td>
-                            <td>{payment.price}</td>
+                            <td>${payment.price}</td>
 
                             <th>
                                 {payment.transactionId}
                             </th>
                             <th>{payment.data}</th>
-                            <th>
-                                card
-                            </th>
+                            <th>{payment?.paymentMehtod}</th>
                         </tr>)
                     }
                 </tbody>
