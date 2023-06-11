@@ -8,7 +8,7 @@ const AuthProvider = ({children}) => {
    
     const [user,setUser] = useState(null)
     const [userRole,setUserRole] = useState('')
-    const [loading,setLoading] = useState(false)
+    const [loading,setLoading] = useState(true)
     const auth = getAuth(app)
     const googleAuth = new GoogleAuthProvider()
     const singupWihtEmailPass = (email,passowed)=>{
@@ -36,10 +36,11 @@ const AuthProvider = ({children}) => {
         const unsubscribe = onAuthStateChanged(auth,currentuser=>{
             setUser(currentuser)
             if (currentuser) {
+                setLoading(false)
                 axios.post(`${import.meta.env.VITE_BASE_URL}/jwt`,{email : currentuser.email})
                     .then(data => {
                          localStorage.setItem('access_token', data.data.token)
-                         setLoading(false)
+                         
                     })
             } else {
                 localStorage.removeItem('access_token')

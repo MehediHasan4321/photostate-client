@@ -1,1 +1,0 @@
-["Landscape Photography","Wildlife Photography","Street Photography","Fashion Photography","Sports Photography","Travel Photography","Fine Art Photography","Wedding Photography"]

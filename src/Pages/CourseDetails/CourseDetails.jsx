@@ -68,7 +68,7 @@ const CourseDetails = () => {
             <div className='mt-12'>
                 <h1 className='text-xl md:text-3xl font-semibold text-neutral-600'>This Instrators Anothre Coures</h1>
                 <div className='mt-10'>
-                    <InstractorCourse email={email} />
+                    <InstractorCourse email={email} id={_id} />
                 </div>
             </div>
             <Toaster />

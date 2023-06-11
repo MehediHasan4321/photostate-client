@@ -2,13 +2,38 @@ import React, { useEffect, useState } from 'react';
 import { getAllPaymentsHistory } from '../../AllApi/getAllPaymentsHistory';
 import Rating from '../../Components/Rating/Rating';
 import { useAuth } from '../../Utlites/useAuth';
+import Swal from 'sweetalert2';
+import { deletePaymentHistoryById } from '../../AllApi/deletePaymentHistoryById';
 
 const StudentPaymentHistory = () => {
-    const {user} = useAuth()
-    const [paymetsHistory,setPaymentsHistory] = useState([])
-    useEffect(()=>{
-        getAllPaymentsHistory(user?.email).then(res=>setPaymentsHistory(res))
-    },[user])
+    const { user } = useAuth()
+    const [paymetsHistory, setPaymentsHistory] = useState([])
+    useEffect(() => {
+        getAllPaymentsHistory(user?.email).then(res => setPaymentsHistory(res))
+    }, [user])
+    const deletePaymentHistory = id => {
+        deletePaymentHistoryById(id).then(res => {
+            if (res.deletedCount > 0) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your Payments History Deleted',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Delete Oparation Not Success',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+      
+
+    }
     return (
         <div className="overflow-x-auto">
             <table className="table">
@@ -22,13 +47,14 @@ const StudentPaymentHistory = () => {
                         <th>Transaction Id</th>
                         <th>Date</th>
                         <th>Payments Methods</th>
+                        <th>Delete History</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        paymetsHistory.map((payment,index)=><tr key={payment._id}>
+                        paymetsHistory.map((payment, index) => <tr key={payment._id}>
                             <th>
-                               {index + 1}
+                                {index + 1}
                             </th>
                             <td>
                                 <div className="flex items-center space-x-3">
@@ -38,8 +64,8 @@ const StudentPaymentHistory = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="font-bold">{payment.name?.slice(0,20)}</div>
-                                        <div className="text-purple-400"><Rating ratingNum={payment.rating}/></div>
+                                        <div className="font-bold">{payment.name?.slice(0, 20)}</div>
+                                        <div className="text-purple-400"><Rating ratingNum={payment.rating} /></div>
                                     </div>
                                 </div>
                             </td>
@@ -63,10 +89,13 @@ const StudentPaymentHistory = () => {
                             </th>
                             <th>{payment.data}</th>
                             <th>{payment?.paymentMehtod}</th>
+                            <th>
+                                <button onClick={() => deletePaymentHistory(payment._id)} className='btn btn-ghost btn-sm'>Delete</button>
+                            </th>
                         </tr>)
                     }
                 </tbody>
-                
+
             </table>
         </div>
     );

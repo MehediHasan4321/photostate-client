@@ -12,12 +12,11 @@ const Instractor = () => {
         getInstractorCourse(instractorInfo.email)
             .then(data => setCourses(data))
     }, [instractorInfo])
-
-    console.log(instractorInfo)
+   console.log(instractorInfo.email)
     return (
         <div>
             <InstractroAbout about={instractorInfo} totalCourse = {course.length}/>
-            <InstractorCourse course={course}/>
+            <InstractorCourse email={instractorInfo.email}/>
             <InstractorGallary />
         </div>
     );
