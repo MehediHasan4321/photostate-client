@@ -10,7 +10,7 @@ const useAxiosSecures = () => {
     const navigate = useNavigate()
 
     const axiosSerure = axios.create({
-        baseURL: 'http://localhost:5000'
+        baseURL: `${import.meta.env.VITE_BASE_URL}`
     })
 
     useEffect(() => {
