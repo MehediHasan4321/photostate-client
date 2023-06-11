@@ -7,7 +7,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { getAuth, updateProfile } from 'firebase/auth';
 import app from '../../firebase/firebase.config';
 import { saveUserToDB } from '../../AllApi/saveUserToDB';
-
+import { useForm } from 'react-hook-form'
 const Regeister = () => {
     const [type, setType] = useState(true)
     const [confiremPass, setConfirmPass] = useState(true)
@@ -15,39 +15,36 @@ const Regeister = () => {
     const handlConfirmPassType = () => setConfirmPass(!confiremPass)
     const { singupWihtEmailPass } = useAuth()
     const location = useLocation()
+    const [passwordError, setPasswordError] = useState('')
     const navigate = useNavigate()
     const from = location?.state?.from?.pathname || '/'
     const auth = getAuth(app)
-    const handlSingUp = event => {
-        event.preventDefault()
-        const form = event.target;
-        const name = form.name.value;
-        const email = form.email.value;
-        const url = form.url.value;
-        const password = form.password.value
-        const confiremPass = form.confirmPassword.value
+    const { register, handleSubmit, formState: { errors }, watch } = useForm()
 
-        if (password !== confiremPass) {
-            return toast.error('Your Password and ConfirmPassword are Not Same')
-        }
-        // console.log(name,email,url,password,confiremPass)
-        singupWihtEmailPass(email, confiremPass)
+    const password = watch('password', '');
+    const confirmPassword = watch('confirmPassword', '')
+    setTimeout(() => {
+        setPasswordError('')
+    }, 7000);
+
+    const handlSingUp = data => {
+        
+        singupWihtEmailPass(data.email, confirmPassword)
             .then((result) => {
-                updateProfile(auth.currentUser, { displayName: name, photoURL: url })
+                updateProfile(auth.currentUser, { displayName: data.name, photoURL: data.url })
                     .then(() => {
-                        saveUserToDB(result.user).then(data => {
-                            if (data.upsertedId || data.modifiedCount > 0) {
+                        saveUserToDB(result.user).then(res => {
+                            if (res.upsertedId || res.modifiedCount > 0) {
                                 toast.success('Your Account Create Successfully')
-                                form.reset()
                                 navigate(from, { replace: true })
                             }
                         })
 
                     })
-                    .catch(err => toast.error(err.message))
+                    .catch(err => setPasswordError(err.message))
             })
             .catch(err => {
-                toast.error(err.message)
+                setPasswordError(err.message)
             })
     }
     return (
@@ -55,21 +52,58 @@ const Regeister = () => {
 
             <div className='w-[450px] shadow-2xl p-6 rounded-xl'>
                 <h1 className='text-4xl font-bold text-center my-12'>Create Your Account</h1>
-                <form onSubmit={handlSingUp} className='space-y-4'>
-                    <input required className='w-full px-4 py-4 bg-[#f2f2f2] rounded-2xl placeholder:text-lg placeholder:font-semibold' type="name" name="name" id="name" placeholder='Enter Your Name' />
-                    <input required className='w-full px-4 py-4 bg-[#f2f2f2] rounded-2xl placeholder:text-lg placeholder:font-semibold' type="email" name="email" id="email" placeholder='Enter Your Email' />
-                    <input className='w-full px-4 py-4 bg-[#f2f2f2] rounded-2xl placeholder:text-lg placeholder:font-semibold' type="url" name="url" id="url" placeholder='Your Photo URL' />
+                <form onSubmit={handleSubmit(handlSingUp)} className='space-y-4'>
+                    <input className='w-full px-4 py-4 bg-[#f2f2f2] rounded-2xl placeholder:text-lg placeholder:font-semibold' type="name" {...register("name", { required: 'Name Is Required' })} id="name" placeholder='Enter Your Name' />
+                    {errors.name && (
+                        <span style={{ color: 'red' }}>{errors.name.message}</span>
+                    )}
+                    <input className='w-full px-4 py-4 bg-[#f2f2f2] rounded-2xl placeholder:text-lg placeholder:font-semibold' type="email" {...register("email", { required: 'Email is requird' })} id="email" placeholder='Enter Your Email' />
+                    {errors.email && (
+                        <span style={{ color: 'red' }}>{errors.email.message}</span>
+                    )}
+                    <input {...register("url", { required: 'URL is Required' })} className='w-full px-4 py-4 bg-[#f2f2f2] rounded-2xl placeholder:text-lg placeholder:font-semibold' type="url" id="url" placeholder='Your Photo URL' />
+                    {errors.url && (
+                        <span style={{ color: 'red' }}>{errors.url.message}</span>
+                    )}
                     <div className='relative'>
-                        <input required className='w-full px-4 py-4 bg-[#f2f2f2] rounded-2xl placeholder:text-lg placeholder:font-semibold' type={type ? 'password' : 'text'} name="password" id="password" placeholder='Password' />
+                        <input className='w-full px-4 py-4 bg-[#f2f2f2] rounded-2xl placeholder:text-lg placeholder:font-semibold'
+                            placeholder='Enter A Strong Password'
+                            type={type ? 'password' : 'text'}
+                            {...register('password', {
+                                required: 'Password is required',
+                                minLength: {
+                                    value: 6,
+                                    message: 'Password must contain at least 6 characters',
+                                },
+                                pattern: {
+                                    value: /^(?=.*[A-Z])(?=.*[@$#!%*?&])[A-Za-z\d@$#!%*?&]{6,}$/,
+                                    message:
+                                        'Password must contain at least 6 characters, including one uppercase letter and one special character',
+                                },
+                            })}
+                        />
                         <BsEye onClick={handlPassType} className=' absolute right-5 top-5 cursor-pointer' />
                     </div>
+
+                    {errors.password && (
+                        <span style={{ color: 'red' }}>{errors.password.message}</span>
+                    )}
                     <div className='relative'>
-                        <input required className='w-full px-4 py-4 bg-[#f2f2f2] rounded-2xl placeholder:text-lg placeholder:font-semibold' type={confiremPass ? 'password' : 'text'} name="confirmPassword" id="confirmPassword" placeholder='Confirm Password' />
+                        <input className='w-full px-4 py-4 bg-[#f2f2f2] rounded-2xl placeholder:text-lg placeholder:font-semibold' type={confiremPass ? 'password' : 'text'} {...register('confirmPassword', {
+                            required: 'Confirm Password is required',
+                            validate: (value) =>
+                                value === password || 'Passwords do not match',
+                        })} id="confirmPassword" placeholder='Confirm Password' />
                         <BsEye onClick={handlConfirmPassType} className=' absolute right-5 top-5 cursor-pointer' />
                     </div>
+                    {errors.confirmPassword && (
+                        <span style={{ color: 'red' }}>{errors.confirmPassword.message}</span>
+                    )}
                     <input className='w-full px-4 py-4 bg-[#27B397] text-white rounded-2xl text-lg font-semibold cursor-pointer' type="submit" value="Submit" />
 
-
+                    {
+                        passwordError && <span style={{ color: 'red' }}>{passwordError}</span>
+                    }
                 </form>
                 <SocialLogin />
                 <div className='mt-4 text-sm font-semibold'>
