@@ -10,7 +10,8 @@ const CourseDetails = () => {
     const courseInfo = useLoaderData()
     const [status, setStatus] = useState(false)
     const { user } = useAuth()
-    const { name, price, rating, instractor, image, description, enroledStudent, email, _id,duration,quantity } = courseInfo || {}
+    const { name, price, rating, instractor, image, description, enroledStudent=[], email, _id,duration,quantity } = courseInfo || {}
+
     const handlSelectCourse = (id, user, course) => {
         setStatus(true)
         saveOrder(id, user, course).then(data => {

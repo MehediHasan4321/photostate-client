@@ -5,6 +5,7 @@ import app from '../firebase/firebase.config';
 import { getUserRole } from '../AllApi/getUserRole';
 import axios from 'axios';
 const AuthProvider = ({children}) => {
+   
     const [user,setUser] = useState(null)
     const [userRole,setUserRole] = useState('')
     const [loading,setLoading] = useState(true)
@@ -26,6 +27,7 @@ const AuthProvider = ({children}) => {
         return signOut(auth)
     }
     useEffect(()=>{
+    
         getUserRole(user?.email).then(data=>{
             setUserRole(data.role)
         })

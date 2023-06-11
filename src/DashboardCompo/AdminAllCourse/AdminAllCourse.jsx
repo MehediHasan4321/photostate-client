@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAllCourser } from '../../AllApi/getAlCourses';
 import Rating from '../../Components/Rating/Rating';
 import Swal from 'sweetalert2';
@@ -6,7 +6,9 @@ import { deleteCourseById } from '../../AllApi/deleteCourseById';
 
 const AdminAllCourse = () => {
     const [courses, setCourses] = useState([])
-    getAllCourser().then(data => setCourses(data))
+    useEffect(()=>{
+        getAllCourser().then(data => setCourses(data))
+    },[])
 
     const handleDelete = id => {
 
@@ -53,9 +55,9 @@ const AdminAllCourse = () => {
                             <th>Instractor</th>
                             <th>Category</th>
                             <th>Total Seat</th>
-                            <th>Course Duration</th>
                             <th>Total Enrolled</th>
                             <th>Availabal Seat</th>
+                            <th>Course Duration</th>
                             <th>Course Status</th>
                             <th>Action</th>
                         </tr>
@@ -71,11 +73,11 @@ const AdminAllCourse = () => {
                                 <div className="flex items-center space-x-3 w-60">
                                     <div className="avatar">
                                         <div className="mask mask-squircle w-20 h-20">
-                                            <img src={course.image} alt="image" />
+                                            <img src={course?.image} alt="image" />
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="font-bold text-sm">{course.name.slice(0, 50)}</div>
+                                        <div className="font-bold text-sm">{course?.name}</div>
                                         <div className="text-sm opacity-50"><Rating ratingNum={course.rating} /></div>
                                     </div>
                                 </div>
@@ -96,10 +98,10 @@ const AdminAllCourse = () => {
                             </td>
                             <td>{course.category}</td>
                             <td>{course.quantity}</td>
-                            <td>{course?.duration} Months</td>
                             <td>{course?.enroledStudent.length}</td>
                             <td>{parseFloat(course.quantity) - parseFloat(course?.enroledStudent.length)}</td>
-                            <td><button className="btn btn-ghost btn-xs">{course.status}</button></td>
+                            <td>{course?.duration?`${course.duration} Months` :"Not Defineid"}</td>
+                            <td>{course.status}</td>
                             <th>
                                 <button onClick={() => handleDelete(course._id)} className="btn btn-ghost btn-xs">Delete</button>
                             </th>
