@@ -5,14 +5,12 @@ import Rating from '../../Components/Rating/Rating';
 import { Link } from 'react-router-dom';
 import { deleteOrderById } from '../../AllApi/deleteOrderById';
 import { Toaster, toast } from 'react-hot-toast';
-import Loader from '../../ShareComponents/Loader/Loader';
 import Swal from 'sweetalert2';
 
 
 const StudentSelectedCourse = () => {
     const { user } = useAuth()
     const [selected, setSelected] = useState([])
-    const [deleteStatus, setDeleteStatus] = useState(false)
     useEffect(()=>{
         findOrderByEmail(user.email,'selecet').then(data => {
             setSelected(data)

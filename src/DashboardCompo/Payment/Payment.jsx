@@ -7,7 +7,7 @@ import { useLoaderData } from 'react-router-dom';
 const Payment = () => {
     const stripePromise = loadStripe(import.meta.env.VITE_Stripe_Secrect_Publisable_Key)
     const course = useLoaderData()
-
+    console.log(course)
     return (
         <div>
             <h1 className="text-3xl">This is Payments Page</h1>

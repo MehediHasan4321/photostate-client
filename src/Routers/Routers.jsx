@@ -21,6 +21,7 @@ import Payment from '../DashboardCompo/Payment/Payment';
 import Instractor from '../Pages/Instractor/Instractor';
 import ManageCourseRequest from '../DashboardCompo/ManageCourseRequest/ManageCourseRequest';
 import { getCoursesByStatus } from '../AllApi/getCoursesByStatus';
+import { getCourseOrderById } from '../AllApi/getCourseOrderById';
 
 const Routers = createBrowserRouter([
     {
@@ -100,7 +101,7 @@ const Routers = createBrowserRouter([
             {
                 path:'/dashboard/payment/:id',
                 element:<Payment/>,
-                loader:({params})=>fetch(`http://localhost:5000/courseOrderById/${params.id}`)
+                loader:({params})=>getCourseOrderById(params.id)
             },
             {
                 path:'/dashboard/manageCourseRequest',

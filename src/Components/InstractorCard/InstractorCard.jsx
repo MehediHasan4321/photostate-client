@@ -20,7 +20,7 @@ const InstractorCard = ({instractor}) => {
                 </div>
                 <div className='flex justify-between  items-center mt-4 text-lg font-semibold'>
                     <p>{talent}</p>
-                    <p>On Going Course {instractorCourse.length}</p>
+                    <p key={'sdkfj'}>On Going Course {instractorCourse.length}</p>
                 </div>
                 
             </div>

@@ -44,7 +44,7 @@ const CourseDetails = () => {
                         <p>Course duration : {duration? `${duration} Months`:'Not Found'} </p>
                         <p><Rating ratingNum={rating} /></p>
 
-                        <div className='flex gap-5 items-center pt-12'>
+                        <div className='flex gap-5 items-center pt-4'>
                             <button className='px-8 py-2 bg-black text-white font-semibold'>Enroll Now</button>
                             <button onClick={() => handlSelectCourse(_id, user, courseInfo)} className='px-8 py-2 bg-black text-white font-semibold'>{status ? "Processing..." : "Confirm Select"}</button>
                         </div>

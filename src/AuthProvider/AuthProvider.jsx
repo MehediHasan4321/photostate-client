@@ -8,7 +8,7 @@ const AuthProvider = ({children}) => {
    
     const [user,setUser] = useState(null)
     const [userRole,setUserRole] = useState('')
-    const [loading,setLoading] = useState(true)
+    const [loading,setLoading] = useState(false)
     const auth = getAuth(app)
     const googleAuth = new GoogleAuthProvider()
     const singupWihtEmailPass = (email,passowed)=>{
