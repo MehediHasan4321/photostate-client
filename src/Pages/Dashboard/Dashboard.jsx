@@ -20,7 +20,6 @@ const Dashboard = () => {
                     <Outlet />
                 </div>
             </div>
-            <Footer />
         </>
     );
 };

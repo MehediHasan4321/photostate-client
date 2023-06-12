@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { getAllPaymentsHistory } from '../../AllApi/getAllPaymentsHistory';
 import Rating from '../../Components/Rating/Rating';
 import { useAuth } from '../../Utlites/useAuth';
 import Swal from 'sweetalert2';
 import { deletePaymentHistoryById } from '../../AllApi/deletePaymentHistoryById';
+import getAllPaymentsHistory from '../../AllApi/getAllPaymentsHistory';
 
 const StudentPaymentHistory = () => {
     const { user } = useAuth()
-    const [paymetsHistory, setPaymentsHistory] = useState([])
-    useEffect(() => {
-        getAllPaymentsHistory(user?.email).then(res => setPaymentsHistory(res))
-    }, [user])
+  const {paymentHistory, refetch, paymentLoading }  = getAllPaymentsHistory(user.email)
+
+
+
+
+
     const deletePaymentHistory = id => {
         deletePaymentHistoryById(id).then(res => {
             if (res.deletedCount > 0) {
@@ -21,6 +23,7 @@ const StudentPaymentHistory = () => {
                     showConfirmButton: false,
                     timer: 1500
                 })
+                refetch()
             } else {
                 Swal.fire({
                     position: 'top-end',
@@ -52,7 +55,7 @@ const StudentPaymentHistory = () => {
                 </thead>
                 <tbody>
                     {
-                        paymetsHistory.map((payment, index) => <tr key={payment._id}>
+                        paymentHistory?.map((payment, index) => <tr key={payment._id}>
                             <th>
                                 {index + 1}
                             </th>

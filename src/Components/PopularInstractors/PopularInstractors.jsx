@@ -4,7 +4,7 @@ import InstractorCard from '../InstractorCard/InstractorCard';
 import { getUserRole } from '../../AllApi/getUserRole';
 import useAxiosSecures from '../../Utlites/useAxiosSecures';
 
-const PopularInstractors = () => {
+const PopularInstractors = ({ num }) => {
     const [instractors, setInstractors] = useState([])
     const [axiosSerure] = useAxiosSecures()
     useEffect(() => {
@@ -17,7 +17,7 @@ const PopularInstractors = () => {
             <SectionTitle title={'Out Favorite Instrator'} />
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {
-                    instractors.length > 6 ? instractors.slice(0, 6).map((intractor) => <InstractorCard key={instractors._id} instractor={intractor} />) : instractors.map((intractor) => <InstractorCard key={instractors._id} instractor={intractor} />)
+                    instractors.length > 6 ? instractors.slice(0, num ? num : instractors?.length).map((intractor) => <InstractorCard key={instractors._id} instractor={intractor} />) : instractors.map((intractor) => <InstractorCard key={instractors._id} instractor={intractor} />)
                 }
             </div>
         </>

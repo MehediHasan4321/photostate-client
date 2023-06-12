@@ -6,19 +6,21 @@ import { Link } from 'react-router-dom';
 import { deleteOrderById } from '../../AllApi/deleteOrderById';
 import { Toaster, toast } from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecures from '../../Utlites/useAxiosSecures';
 
 
 const StudentSelectedCourse = () => {
     const { user } = useAuth()
-    const [selected, setSelected] = useState([])
-    useEffect(()=>{
-        findOrderByEmail(user.email,'selecet').then(data => {
-            setSelected(data)
-            
-        })
-    },[user])
-     
-     
+    const [axiosSerure] = useAxiosSecures()
+     const {data,refetch,isLoading} = useQuery({
+        queryFn:async ()=>{
+            const res = await axiosSerure(`/courseOrder/${user?.email}?status${"selecet"}`)
+           return res.data
+        },
+        queryKey:['selected']
+     })
+  
     const handleCancelCourse = id => {
         Swal.fire({
             title: 'Are you sure?',
@@ -37,6 +39,7 @@ const StudentSelectedCourse = () => {
                             'Your file has been Canceled.',
                             'success'
                         )
+                        refetch()
                     }
                     else {
                         Swal.fire(
@@ -72,7 +75,7 @@ const StudentSelectedCourse = () => {
                 <tbody>
 
                     {
-                        selected.map((order, index) => <tr key={order._id}>
+                        data?.map((order, index) => <tr key={order._id}>
                             <th>
                                 {index + 1}
                             </th>

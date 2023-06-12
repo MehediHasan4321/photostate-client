@@ -22,6 +22,7 @@ import Instractor from '../Pages/Instractor/Instractor';
 import ManageCourseRequest from '../DashboardCompo/ManageCourseRequest/ManageCourseRequest';
 import { getCoursesByStatus } from '../AllApi/getCoursesByStatus';
 import { getCourseOrderById } from '../AllApi/getCourseOrderById';
+import PopularInstractors from '../Components/PopularInstractors/PopularInstractors';
 
 const Routers = createBrowserRouter([
     {
@@ -54,6 +55,10 @@ const Routers = createBrowserRouter([
                 path:'/instractor/:email',
                 element:<Instractor/>,
                 loader:({params})=>fetch(`${import.meta.env.VITE_BASE_URL}/instractor/${params.email}`)
+            },
+            {
+                path:'/instractors',
+                element:<PopularInstractors/>
             }
         ]
     },

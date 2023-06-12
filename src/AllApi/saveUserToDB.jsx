@@ -13,3 +13,4 @@ export const saveUserToDB = async (user,role='student') => {
     const data = await res.json()
     return data
 }
+

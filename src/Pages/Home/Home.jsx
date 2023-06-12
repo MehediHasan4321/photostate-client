@@ -8,7 +8,7 @@ const Home = () => {
         <>
         <Banner/>
         <PopulerCourses/>
-        <PopularInstractors/>
+        <PopularInstractors num={6}/>
         </>
     );
 };

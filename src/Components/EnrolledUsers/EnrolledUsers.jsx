@@ -5,6 +5,7 @@ import useAxiosSecures from "../../Utlites/useAxiosSecures";
 const EnrolledUsers = ({ enrolledUser }) => {
     const [users,setUsers] = useState([])
     const [axiosSerure] = useAxiosSecures()
+   
     useEffect(()=>{
         axiosSerure(`enrolledStudent?emails=${enrolledUser}`).then(res=>setUsers(res.data))
         
