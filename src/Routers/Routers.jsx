@@ -23,6 +23,7 @@ import ManageCourseRequest from '../DashboardCompo/ManageCourseRequest/ManageCou
 import { getCoursesByStatus } from '../AllApi/getCoursesByStatus';
 import { getCourseOrderById } from '../AllApi/getCourseOrderById';
 import PopularInstractors from '../Components/PopularInstractors/PopularInstractors';
+import FourOFourPage from '../Pages/FourOFourPage/FourOFourPage';
 
 const Routers = createBrowserRouter([
     {
@@ -53,7 +54,7 @@ const Routers = createBrowserRouter([
             },
             {
                 path:'/instractor/:email',
-                element:<Instractor/>,
+                element:<PrivetRoute><Instractor/></PrivetRoute>,
                 loader:({params})=>fetch(`${import.meta.env.VITE_BASE_URL}/instractor/${params.email}`)
             },
             {
@@ -68,51 +69,55 @@ const Routers = createBrowserRouter([
         children:[
             {
                 path:'/dashboard/addCourse',
-                element:<AddCourse/>
+                element:<PrivetRoute><AddCourse/></PrivetRoute>
             },
             {
                 path:'/dashboard/myCourse',
-                element:<InstractorAllCours/>
+                element:<PrivetRoute><InstractorAllCours/></PrivetRoute>
             },
             {
                 path:'/dashboard/allStudents',
-                element:<AllStudents/>
+                element:<PrivetRoute><AllStudents/></PrivetRoute>
             },
             {
                 path:'/dashboard/allInstractors',
-                element:<AllInstractors/>
+                element:<PrivetRoute><AllInstractors/></PrivetRoute>
             },
             {
                 path:"/dashboard/allCourses",
-                element:<AdminAllCourse/>
+                element:<PrivetRoute><AdminAllCourse/></PrivetRoute>
             },
             {
                 path:'/dashboard/updateCourse/:id',
-                element:<UpdateCourse/>,
+                element:<PrivetRoute><UpdateCourse/></PrivetRoute>,
                 loader:({params})=>fetch(`${import.meta.env.VITE_BASE_URL}/courses/${params.id}`)
             },
             {
                 path:'/dashboard/selectedClass',
-                element:<StudentSelectedCourse/>
+                element:<PrivetRoute><StudentSelectedCourse/></PrivetRoute>
             },
             {
                 path:'/dashboard/enrolledClass',
-                element:<StudentEnrolledCourse/>
+                element:<PrivetRoute><StudentEnrolledCourse/></PrivetRoute>
             },
             {
                 path:'/dashboard/paymentHistory',
-                element:<StudentPaymentHistory/>
+                element:<PrivetRoute><StudentPaymentHistory/></PrivetRoute>
             },
             {
                 path:'/dashboard/payment/:id',
-                element:<Payment/>,
+                element:<PrivetRoute><Payment/></PrivetRoute>,
                 loader:({params})=>getCourseOrderById(params.id)
             },
             {
                 path:'/dashboard/manageCourseRequest',
-                element:<ManageCourseRequest/>
+                element:<PrivetRoute><ManageCourseRequest/></PrivetRoute>
             }
         ]
+    },
+    {
+        path:'*',
+        element:<FourOFourPage/>
     }
 ])
 

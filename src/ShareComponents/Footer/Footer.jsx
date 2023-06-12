@@ -6,9 +6,9 @@ const Footer = () => {
         <div className="bg-base-300">
             <footer className="footer footer-center p-10 text-base-content rounded">
                 <div className="grid grid-flow-col gap-4">
-                    <a className="link link-hover">About us</a>
-                    <a className="link link-hover">Contact</a>
-                    <a className="link link-hover">Jobs</a>
+                    <a className="link link-hover">Home</a>
+                    <a className="link link-hover">Course</a>
+                    <a className="link link-hover">Instractor</a>
                     <a className="link link-hover">Press kit</a>
                 </div>
                 <div>
@@ -19,7 +19,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <div>
-                    <p>Copyright © 2023 - All right reserved by ACME Industries Ltd</p>
+                    <p>Copyright © 2023 - All right reserved by Photostat</p>
                 </div>
             </footer>
         </div>
