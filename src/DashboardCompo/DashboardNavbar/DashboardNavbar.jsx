@@ -17,7 +17,7 @@ const DashboardNavbar = () => {
                 userRole === 'instractor' && <>
                     <Link to={'/dashboard/myCourse'}><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>My Courses</button></Link>
                     <Link to={'/dashboard/addCourse'}><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>Add A Course</button></Link>
-                    <Link><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'>Added To Gallary</button></Link>
+                    <Link to={'/dashboard/gotPayments'}><button className='border-[1px] hover:bg-white text-md font-semibold py-2 rounded-lg w-full'> Payments</button></Link>
                 </>
             }
             {

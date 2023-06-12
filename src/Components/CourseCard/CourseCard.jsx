@@ -31,6 +31,7 @@ const CourseCard = ({ course }) => {
             <div className=' absolute bottom-0 w-full'>
                 <Link to={`/courseDetails/${_id}`}><button disabled={enroledStudent.length >= quantity || role === 'admin' || role === 'instractor'} className='w-full h-20 bg-black text-white font-semibold rounded-b-md disabled:bg-gray-600'>View Details</button></Link>
             </div>
+            {parseFloat(quantity) <= parseFloat(enroledStudent.length) && <span className='text-md font-semibold text-white bg-red-500 rounded-xl text-center px-8 py-2 absolute top-2 right-2'>Sold Out</span>}
         </div>
     );
 };

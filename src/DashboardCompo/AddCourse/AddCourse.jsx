@@ -24,7 +24,7 @@ const AddCourse = () => {
         uploadImage(image).then(data => {
 
             const imgUrl = data.data.display_url
-            const course = { name, category, price, rating, image: imgUrl, description, enroledStudent: [], email: user?.email, instractor: { name: user.displayName, image: user.photoURL }, status: 'painding', quantity,duration }
+            const course = { name, category, price, rating, image: imgUrl, description, enroledStudent: [], email: user?.email, instractor: { name: user.displayName, image: user.photoURL }, status: 'painding', quantity,duration}
             addCouse(course)
                 .then(data => {
                     if (data.insertedId) {

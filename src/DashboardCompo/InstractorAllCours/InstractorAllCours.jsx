@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../Utlites/useAuth';
-import { getInstractorCourse } from '../../AllApi/getInstractorCourse';
 import { deleteCourseById } from '../../AllApi/deleteCourseById';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import useAxiosSecures from '../../Utlites/useAxiosSecures';
+import { useQuery } from '@tanstack/react-query';
 
 const InstractorAllCours = () => {
-    const [course, setCourse] = useState([])
+    const [axiosSerure] = useAxiosSecures()
     const { user } = useAuth()
+    const [feadback,setFedback] = useState('')
+    const { data, refetch } = useQuery({
+        queryFn: async () => {
+            const res = await axiosSerure(`/instractorCourse/${user?.email}`)
+            return res.data
+        }, queryKey: 'instractorCourse'
+    })
 
-    getInstractorCourse(user?.email).then(data => setCourse(data))
+
     const handleDelete = id => {
         Swal.fire({
             title: 'Are you sure?',
@@ -42,7 +50,7 @@ const InstractorAllCours = () => {
             }
         })
     }
-    
+
     return (
         <>
             <div className="overflow-x-auto">
@@ -65,7 +73,7 @@ const InstractorAllCours = () => {
                     <tbody>
                         {/* row 1 */}
                         {
-                            course.map((cours, index) => <>
+                            data?.map((cours, index) => <>
                                 <tr key={cours._id}>
                                     <th>
                                         {index + 1}
@@ -87,7 +95,7 @@ const InstractorAllCours = () => {
                                     <td className='font-bold'>Price: ${cours.price}</td>
                                     <td className='font-bold'>{cours?.quantity}</td>
                                     <td className='font-bold'>{cours.status}</td>
-                                    <td>{cours.status ==='deny'? 'feadback Found': "No Fedback"}</td>
+                                    <td>{cours.status === 'deny' ? <button onClick={() => {window.my_modal_1.showModal(), setFedback(cours?.fedback)}} className='btn btn-ghost btn-sm'>Feadback Found</button> : "No Fedback"}</td>
                                     <th>
                                         <Link to={`/dashboard/updateCourse/${cours._id}`} className="btn btn-ghost btn-xs font-bold">Updata</Link>
                                     </th>
@@ -95,7 +103,7 @@ const InstractorAllCours = () => {
                                         <button onClick={() => handleDelete(cours._id)} className="btn btn-ghost btn-xs font-bold">Delete</button>
                                     </th>
                                 </tr>
-                               
+
                             </>)
                         }
                     </tbody>
@@ -103,7 +111,18 @@ const InstractorAllCours = () => {
                 </table>
             </div>
             {/* You can open the modal using ID.showModal() method */}
-
+            {/* Open the modal using ID.showModal() method */}
+            
+            <dialog id="my_modal_1" className="modal">
+                <form method="dialog" className="modal-box">
+                    <h3 className="font-bold text-lg">Hello! {user?.displayName} </h3>
+                    <p className="py-4">{feadback}</p>
+                    <div className="modal-action">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button onClick={()=>setFedback('')} className="btn">Close</button>
+                    </div>
+                </form>
+            </dialog>
 
         </>
     );

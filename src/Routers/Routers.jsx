@@ -24,6 +24,7 @@ import { getCoursesByStatus } from '../AllApi/getCoursesByStatus';
 import { getCourseOrderById } from '../AllApi/getCourseOrderById';
 import PopularInstractors from '../Components/PopularInstractors/PopularInstractors';
 import FourOFourPage from '../Pages/FourOFourPage/FourOFourPage';
+import InstractorsPayments from '../DashboardCompo/InstractorsPayments/InstractorsPayments';
 
 const Routers = createBrowserRouter([
     {
@@ -112,6 +113,10 @@ const Routers = createBrowserRouter([
             {
                 path:'/dashboard/manageCourseRequest',
                 element:<PrivetRoute><ManageCourseRequest/></PrivetRoute>
+            },
+            {
+                path:'/dashboard/gotPayments',
+                element:<PrivetRoute><InstractorsPayments/></PrivetRoute>
             }
         ]
     },

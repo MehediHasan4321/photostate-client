@@ -3,9 +3,12 @@ import CourseCard from '../CourseCard/CourseCard';
 import { getInstractorCourse } from '../../AllApi/getInstractorCourse';
 
 const InstractorCourse = ({ email, id }) => {
+
     const [course, setCourses] = useState([])
+    
     useEffect(() => {
-        getInstractorCourse(email).then(res => {
+        getInstractorCourse(email,'aprove').then(res => {
+
             if (id) {
                 setCourses(res.filter(item => item._id !== id))
             } else {

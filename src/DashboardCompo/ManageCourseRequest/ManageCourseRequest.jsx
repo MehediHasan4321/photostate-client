@@ -1,18 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Rating from '../../Components/Rating/Rating';
 import Swal from 'sweetalert2';
 import { deleteCourseById } from '../../AllApi/deleteCourseById'
 import { updateCourseById } from '../../AllApi/updateCourseById';
 import { Toaster, toast } from 'react-hot-toast';
-import { getCoursesByStatus } from '../../AllApi/getCoursesByStatus';
+import useAxiosSecures from '../../Utlites/useAxiosSecures';
+import { useQuery } from '@tanstack/react-query';
 
 const ManageCourseRequest = () => {
-    const [aproveCourse, setAproveCourse] = useState([])
-    const [fedbackId,setFedbackId] = useState('')
-    useEffect(() => {
-        getCoursesByStatus('painding').then(course => setAproveCourse(course))
-    }, [])
-
+    const [fedbackId, setFedbackId] = useState('')
+    const [axiosSerure] = useAxiosSecures()
+    const { data, refetch } = useQuery({
+        queryFn: async () => {
+            const res = await axiosSerure(`${import.meta.env.VITE_BASE_URL}/coursesStatus/${'painding'}`)
+            return res.data
+        }, queryKey: 'course Request'
+    })
+    
     const handleDelete = id => {
 
         Swal.fire({
@@ -32,13 +36,17 @@ const ManageCourseRequest = () => {
                             'Deleted!',
                             'Your file has been deleted.',
                             'success'
+
                         )
+                        refetch()
                     } else {
                         Swal.fire(
                             'Failed To Delete!',
                             "Your file dosen't  deleted.",
                             'error'
                         )
+
+                        refetch()
                     }
                 })
 
@@ -68,6 +76,7 @@ const ManageCourseRequest = () => {
                             'Your file has been Aproved.',
                             'success'
                         )
+                        refetch()
                     }
                 })
                     .catch(err => {
@@ -87,19 +96,21 @@ const ManageCourseRequest = () => {
     }
 
     const handleFedback = id => setFedbackId(id)
-    const fedbackSubmit = (event)=>{
-       const sendFedback = {
-        fedback : event.target.fedback.value,
-        status:'deny'
-       }
-        updateCourseById(sendFedback,fedbackId).then(res=>{
-            if(res.modifiedCount>0){
+    const fedbackSubmit = (event) => {
+        const sendFedback = {
+            fedback: event.target.fedback.value,
+            status: 'deny'
+        }
+        updateCourseById(sendFedback, fedbackId).then(res => {
+            if (res.modifiedCount > 0) {
                 toast.success('Fedback Send To Instractor')
                 setFedbackId('')
+                refetch()
             }
-            else{
+            else {
                 toast.error("Fedback can't Send To Instractor")
                 setFedbackId('')
+                refetch()
             }
         })
         setFedbackId('')
@@ -125,7 +136,7 @@ const ManageCourseRequest = () => {
                     <tbody>
 
                         {
-                            aproveCourse.map((course, index) => <>
+                            data?.map((course, index) => <>
                                 <tr key={course._id}>
                                     <th>
                                         {index + 1}
@@ -159,8 +170,8 @@ const ManageCourseRequest = () => {
                                     </td>
                                     <td>{course.category}</td>
                                     <td>{course.quantity}</td>
-                                    <td><button disabled={course.status === 'aprove' ||course.status === 'deny'} onClick={() => handleAprove(course._id)} className="btn btn-ghost btn-xs">Aprove</button></td>
-                                    <td onClick={()=>handleFedback(course._id)}><button disabled={course.status === 'aprove' ||course.status === 'deny'} className="btn btn-ghost btn-xs" onClick={() => window.my_modal_2.showModal()}>Deny</button></td>
+                                    <td><button disabled={course.status === 'aprove' || course.status === 'deny'} onClick={() => handleAprove(course._id)} className="btn btn-ghost btn-xs">Aprove</button></td>
+                                    <td onClick={() => handleFedback(course._id)}><button disabled={course.status === 'aprove' || course.status === 'deny'} className="btn btn-ghost btn-xs" onClick={() => window.my_modal_2.showModal()}>Deny</button></td>
                                     <th>
                                         <button onClick={() => handleDelete(course._id)} className="btn btn-ghost btn-xs">Delete</button>
                                     </th>
@@ -171,7 +182,7 @@ const ManageCourseRequest = () => {
                     </tbody>
                 </table>
                 <dialog id="my_modal_2" className="modal">
-                <form onSubmit={fedbackSubmit} method="dialog" className="modal-box">
+                    <form onSubmit={fedbackSubmit} method="dialog" className="modal-box">
                         <textarea name="fedback" id="fedback" className='w-full h-32 text-neutral-600 text-md font-semibold p-2 border-[1px] rounded-lg' placeholder='Enter Fedback Whay You Want To Deny This Course'></textarea>
                         <input className='px-6 py-2 bg-black text-white font-semibold rounded-lg' type="submit" value="Send Fedback" />
                     </form>
@@ -181,7 +192,7 @@ const ManageCourseRequest = () => {
                 </dialog>
             </div>
             {/* Open the modal using ID.showModal() method */}
-            <Toaster/>
+            <Toaster />
         </>
     );
 }

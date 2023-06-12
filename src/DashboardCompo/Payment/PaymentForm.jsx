@@ -141,7 +141,7 @@ const PaymentForm = ({ price, course }) => {
                         },
                     }}
                 />
-                <button className='btn btn-outline btn-primary btn-sm mt-4' type="submit" disabled={!stripe || !clientSecrect || processing || !price} >
+                <button className='btn btn-outline btn-primary btn-sm mt-4' type="submit" disabled={!stripe || !clientSecrect || processing || !price||!elements} >
                     {processing ? processing : `Pay ${price}`}
                 </button>
             </form>

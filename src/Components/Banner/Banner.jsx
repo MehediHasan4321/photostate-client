@@ -1,13 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css"
+import CarusalBanner from '../CarusalBanner/CarusalBanner';
+
 
 const Banner = () => {
+    const [slider, setSlider] = useState([])
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_BASE_URL}/allBanner`).then(res => res.json()).then(data => setSlider(data))
+    }, [])
+
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        cssEase: "linear"
+    };
     return (
-        <div className='w-full h-[60vh] flex items-center' style={{backgroundImage:`linear-gradient(80deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(${'https://c8.alamy.com/comp/KC2B51/professional-wildlife-photographer-outdoor-KC2B51.jpg'})`,backgroundPosition:'center',objectFit:'cover'}}>
-            <div className= 'w-full text-center md:text-left md:w-1/3 md:ml-20'>
-                <button className=' bg-orange-600 text-white px-10 text-center'>Beautiful</button>
-                <h1 className='text-5xl font-bold text-white uppercase my-5'>photography</h1>
-                <p className='text-white'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error adipisci modi qui quaerat consequatur ullam maxime voluptas dolorum aliquam nisi!</p>
-            </div>
+        <div className="container mx-auto w-full">
+            <Slider {...settings}>
+                {
+                    slider.map((item) => <CarusalBanner key={item._id} info={item} />)
+                }
+            </Slider>
         </div>
     );
 };

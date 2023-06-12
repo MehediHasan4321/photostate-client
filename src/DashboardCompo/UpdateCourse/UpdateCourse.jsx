@@ -21,9 +21,9 @@ const UpdateCourse = () => {
         const description = form.description.value
         const quantity = form.quantity.value
         const duration = form.duration.value
-        const updataCourse = { name, category, price, rating, image, description,quantity,duration }
+        const updataCourse = { name, category, price, rating, image, description,quantity,duration,status:'painding',fedback:'' }
     
-        //console.log(updataCourse)
+        
         updateCourseById(updataCourse, data._id).then(data => {
             if (data.modifiedCount > 0) {
                 setUpdateing(false)

@@ -13,14 +13,14 @@ import useAxiosSecures from '../../Utlites/useAxiosSecures';
 const StudentSelectedCourse = () => {
     const { user } = useAuth()
     const [axiosSerure] = useAxiosSecures()
-     const {data,refetch,isLoading} = useQuery({
+     const {data,refetch} = useQuery({
         queryFn:async ()=>{
-            const res = await axiosSerure(`/courseOrder/${user?.email}?status${"selecet"}`)
+            const res = await axiosSerure(`courseOrder/${user.email}?status=${'selecet'}`)
            return res.data
         },
         queryKey:['selected']
      })
-  
+  console.log(data)
     const handleCancelCourse = id => {
         Swal.fire({
             title: 'Are you sure?',
